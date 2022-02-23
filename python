@@ -1,1 +1,33 @@
-if _ in <list>
+if _ in <list>  #parses the list
+if _ is _    # for comparing id
+if _ != _:
+elif _ 
+
+vim:
+yy = copy
+gg = top of page
+y = start copy
+G = end of page
+yG = coppy to the end
+p = paste
+
+globalVar = 1
+def <funcName>(par1, par2):   #define a function
+  localVar = 2
+
+x = input("enter your mom")  #int() can be used here
+
+range(1,10)  #range from 1 to 9 (range is non inclusive)
+range(START, STOP, STEP)
+range(1,15,3) == [1,4,7,10,13]
+<string>[START:STOP:STEP]  #range for strings
+
+for count,value in enumerate(list):
+  list[count] = value + 1
+  
+  list.append(val)
+  
+  ord()  # ASCII decimal value of string
+  format(ord('char'), '0>8b')  #gives string of binary value of ASCII char  !! First param must be int !!
+  int(<binStr>, 2)  # bin to int
+  chr(<int>)  #ord to string
