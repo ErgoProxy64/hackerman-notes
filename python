@@ -41,3 +41,7 @@ with open("test.txt", 'rwb') as fp:  # opens file as 'fp', file name must be a s
   lines = fp.readlines()  # reads as a list
   fp.write('string')  #  overwrites the file with string
   fp.writelines(<list>)  #  overwrites from a list
+
+import math as m  #imports math but can use m instead of math
+from math import pi   #just imports pi
+
