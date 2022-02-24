@@ -1,3 +1,4 @@
+
 if _ in <list>  #parses the list
 if _ is _    # for comparing id
 if _ != _:
@@ -21,6 +22,8 @@ range(1,10)  #range from 1 to 9 (range is non inclusive)
 range(START, STOP, STEP)
 range(1,15,3) == [1,4,7,10,13]
 <string>[START:STOP:STEP]  #range for strings
+<string>.split()  # creates list by spliting strings on spaces
+len(<string>)  # gives length of string
 
 for count,value in enumerate(list):
   list[count] = value + 1
@@ -31,3 +34,10 @@ for count,value in enumerate(list):
   format(ord('char'), '0>8b')  #gives string of binary value of ASCII char  !! First param must be int !!
   int(<binStr>, 2)  # bin to int
   chr(<int>)  #ord to string
+
+with open("test.txt", 'rwb') as fp:  # opens file as 'fp', file name must be a string, param: r=read, w=write, b=binary
+  lines = fp.read(<int>)    # number indicates how many characters to read
+  print(lines)
+  lines = fp.readlines()  # reads as a list
+  fp.write('string')  #  overwrites the file with string
+  fp.writelines(<list>)  #  overwrites from a list
