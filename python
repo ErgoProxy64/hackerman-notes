@@ -45,3 +45,21 @@ with open("test.txt", 'rwb') as fp:  # opens file as 'fp', file name must be a s
 import math as m  #imports math but can use m instead of math
 from math import pi   #just imports pi
 
+s = {1,2,3,4,5}  # sets, unorganized, can't be referenced and can't have duplicates 
+s0.union(s1)  # combine sets, only returns conbination, must use s0= to change s0
+s0.add(10)  # adds to set, does change s0
+s0.remove(5)  # just like it says on the tin
+s0.difference(s1)  # returns items in s0 that are not in s1
+s0.intersection(s1)  # retuns items in both
+
+dic = {'I':1, 'V':5, 'X':10, 'L':50}  # dictionary, uses keys to ref values, keys must be uniqe
+dic['I'] -> 1
+for key in dic:  # when iderating through a dic the key is pulled, not the values
+for key,val in dic.items():  # one way to pull key and values
+
+def funCtion(*args):  # how to have variable paramaters in a function, args is a tuple of paramaters passed to function
+def funCtion(**kwargs):  # makes a dictionary of items passed
+funCtion(key=val, key1=val2)
+
+y = lambda x: x +100  # lambda's are mini functions
+y(10)
