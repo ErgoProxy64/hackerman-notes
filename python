@@ -1,3 +1,6 @@
+.join() # AAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHH!!!!!!!!!!!1
+reversed(<string or list>)   # reverses list n shzl
+sorted(list) / sort(list)  #sorted makes new list sort sorts the list
 
 if _ in <list>  #parses the list
 if _ is _    # for comparing id
@@ -45,7 +48,7 @@ with open("test.txt", 'rwb') as fp:  # opens file as 'fp', file name must be a s
 import math as m  #imports math but can use m instead of math
 from math import pi   #just imports pi
 
-s = {1,2,3,4,5}  # sets, unorganized, can't be referenced and can't have duplicates 
+s = {1,2,3,4,5}  # sets, unorganized, can't be referenced and can't have duplicates, use set() to make empty set
 s0.union(s1)  # combine sets, only returns conbination, must use s0= to change s0
 s0.add(10)  # adds to set, does change s0
 s0.remove(5)  # just like it says on the tin
