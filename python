@@ -63,3 +63,5 @@ funCtion(key=val, key1=val2)
 
 y = lambda x: x +100  # lambda's are mini functions
 y(10)
+
+if x in lst:
