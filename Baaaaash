@@ -1,0 +1,29 @@
+https://git.cybbh.space/programming/bash/public/
+
+--PRO BASH USEAGE--
+/  (search in man pages or when useing less)
+<tab><tab>  (shows all options available)
+<ctrl><shift><c/v>  (for copy/paste in terminal)
+!<history line number>  (rerun commands from history)
+<ctrl>r <provide pattern> <ctrl>r   (reverse-i-search, search for command in history(?) ctrl r again to cyle through)
+# comments :) can be referenced with ctrl r
+# explainshell.com is a good resorce for looking shit up
+!! #run last command
+
+
+
+--FILE MANIPULATION COMMANDS--
+cd - #go to last dir
+.  #ref current dir
+touch #create files
+mkdir -p #create dir in dirs
+curl cht.sh/<command>  #finds examples of command
+cp #copy files
+mv #move files
+> #replace  >> #append
+cat -n # -n for line numbers
+ln -s <source> <link> #creates a symbolic link
+
+locate #searches based off database
+which <command> whereis <command> whatis <command> # shows location/location + man page location/discription of command
+2> /dev/null  #dup errors in da trash
