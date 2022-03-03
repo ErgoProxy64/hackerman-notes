@@ -10,6 +10,7 @@ https://git.cybbh.space/programming/bash/public/
 # explainshell.com is a good resorce for looking shit up
 !! #run last command
 
+man -k <keyword> | grep <more keywords>  # searches for commands
 
 
 --FILE MANIPULATION COMMANDS--
@@ -17,7 +18,7 @@ cd - #go to last dir
 .  #ref current dir
 touch #create files
 mkdir -p #create dir in dirs
-curl cht.sh/<command>  #finds examples of command
+curl cht.sh/<command>  #finds examples of command online
 cp #copy files
 mv #move files
 > #replace  >> #append
@@ -26,4 +27,60 @@ ln -s <source> <link> #creates a symbolic link
 
 locate #searches based off database
 which <command> whereis <command> whatis <command> # shows location/location + man page location/discription of command
-2> /dev/null  #dup errors in da trash
+2> /dev/null  #dump errors in da trash
+
+--DATA OUTPUT--
+cut -d<delimiter> -f<row numbers to include>  #a way to cut out rows of output, -c<num> cuts out number of spaces
+awk '{print $<row number>}' # cuts rows based on spaces, can handle multiple spaces unlike cut
+awk -F<delimiter> '{print $<row number>}' # awk using -F for delimiters, cuts out delimiter
+awk '{print "ur mom lel="$5, "ur dad="$1}'  # example of how you can print text and rows freely with awk
+awk -F: '/root|student/ {print $0}' /etc/passwd # just pulls lines that starts with root or student
+awk -F: '($7=="/bin/bash") BEGIN {print $0-}' /etc/passwd  # prints every line that has "/bin/bash" in row 7
+awk '{print $NF}' # prints last feild 
+awk -F: 'BEGIN {OFS="#"}' # replaces ":" with "#"
+sort  # pipe into sort to sort data by ASCII value
+sort -nr  # -n sorts numbers -r sorts backwards
+sort -t: -k2,3  # splits data into rows on ":" and then sorts on rows 2 and then 3
+uniq -c  # removes adjacent duplicates -c gives line numbers
+
+
+--ORGANAZATIONAL OPORATORS--
+alias # just don't forget this exists
+<variableName>=$(<command or value>) # making variables in bash, $(<command>) can also be used to access a command in the middle of a string
+  # ":" can be used instead of "/"
+sed 's/<pattern>/<replace_with>/g' <file> # "s" denotes replace, "g" means all instances, prints <file> with <pattern> replaced by <replace_with> 
+sed -i # replaces original file
+sed 's/<pat>/<replace>/g';s/<pat2>/<replace2>/g' <file> # replace multiple different things in a file
+sed '2d' <file>  #deletes second line
+
+
+--COMARITORARATORS--
+== & != for comparing strings
+-eq & -ne for comparing integers
+
+
+--SCRIPTING--
+vim <name>.sh && chmod +x <name>.sh
+  #!/bin/bash
+
+
+
+--ACTIVITIES--
+A1 Brace Expansion:
+  mkdir /var/log/{auth,syslog,dmesg}_log  # is the same as... 
+  mkdir /var/log/auth_log /var/log/syslog_log /var/log/dmesg_log  # also {1..5} is 1 through 5
+A2 Find & Copy:
+  $HOME/1123/[^~].txt # [^] is a not character in RegX
+  cp $HOME/1123/*[^~].txt CUT # used to copy all text files that dont end with ~ to CUT
+A3 More Find:
+  find /lib -empty -print '%i %f\n'
+A4 Find & Print:
+  find / -type f -inum 999 -printf '%i %f\n' 2>/dev/null
+A5 CUT Delimitation:
+  ls -l | cut -d: -f2 | cut -d' ' -f2 | cut -d. -f1- -s > names # filtering with cut, -s removes lines that don't have delimiter
+A6 Regex:
+A7 Awk Stuff:
+A8 Awk My Ass Off:
+  dmesg | awk '/BIOS|CPU/ {print $0}' | cut -d] -f2-
+A9 String Subbing:
+  
