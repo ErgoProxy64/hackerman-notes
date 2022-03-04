@@ -27,9 +27,10 @@ ln -s <source> <link> #creates a symbolic link
 
 locate #searches based off database
 which <command> whereis <command> whatis <command> # shows location/location + man page location/discription of command
-2> /dev/null  #dump errors in da trash
+2>/dev/null  #dump errors in da trash
 
 --DATA OUTPUT--
+head/tail -n<num>
 cut -d<delimiter> -f<row numbers to include>  #a way to cut out rows of output, -c<num> cuts out number of spaces
 awk '{print $<row number>}' # cuts rows based on spaces, can handle multiple spaces unlike cut
 awk -F<delimiter> '{print $<row number>}' # awk using -F for delimiters, cuts out delimiter
@@ -44,14 +45,33 @@ sort -t: -k2,3  # splits data into rows on ":" and then sorts on rows 2 and then
 uniq -c  # removes adjacent duplicates -c gives line numbers
 
 
+--SPECIAL PARAMETERS--
+$#  num of arguments passed to shell
+$0  the script name
+$i  'i'th argument passed to the shell
+$*  gives all arguments passed to the shell
+$!  gives PID of last background running process
+$?  exit status of last command   0 == success 
+$_  gives last argument provided to previous command
+$$  gives PID of current shell
+$@  holds arguments passed to the scipt and treat them as an array
+$-  represents the current flag set in your shell (.himBH are the flags in bash) 
+​
+47
+
+
 --ORGANAZATIONAL OPORATORS--
 alias # just don't forget this exists
-<variableName>=$(<command or value>) # making variables in bash, $(<command>) can also be used to access a command in the middle of a string
-  # ":" can be used instead of "/"
+function <funName>()  { <code> }   #how to write a function in bash
+<VARIABLENAME>=$(<command>) # making variables in bash, $(<command>) can also be used to access a command in the middle of a string
+<variableName>=<string or int>  # variable for string or int
+${<varName>}<string>  # how to ref a var in a string
+# ":" can be used instead of "/"
 sed 's/<pattern>/<replace_with>/g' <file> # "s" denotes replace, "g" means all instances, prints <file> with <pattern> replaced by <replace_with> 
 sed -i # replaces original file
 sed 's/<pat>/<replace>/g';s/<pat2>/<replace2>/g' <file> # replace multiple different things in a file
 sed '2d' <file>  #deletes second line
+sed -n '10p' # pulls the 10th line
 
 
 --COMARITORARATORS--
@@ -79,8 +99,13 @@ A4 Find & Print:
 A5 CUT Delimitation:
   ls -l | cut -d: -f2 | cut -d' ' -f2 | cut -d. -f1- -s > names # filtering with cut, -s removes lines that don't have delimiter
 A6 Regex:
+  egrep -o "([0-9]{1,3}\.){3}[0-9]{1,3}" Story_HiddenIPs | sort | uniq -c | sort -nr
 A7 Awk Stuff:
+  awk -F: '($3>3 && $NF=="/bin/bash")' /etc/passwd
 A8 Awk My Ass Off:
-  dmesg | awk '/BIOS|CPU/ {print $0}' | cut -d] -f2-
+  dmesg | awk '/BIOS|CPU/ {print $0}' | egrep -iv "usable|reserved" | cut -d] -f2-
 A9 String Subbing:
+  awk -F: 'OFS=":"}{print $1,$2}' shadow.txt
+A10 String Sub:
+  sed "/\/bin\/false/d:/\/bin\/sh/d" /etc/passed > passwd.txt
   
