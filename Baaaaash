@@ -43,21 +43,23 @@ sort  # pipe into sort to sort data by ASCII value
 sort -nr  # -n sorts numbers -r sorts backwards
 sort -t: -k2,3  # splits data into rows on ":" and then sorts on rows 2 and then 3
 uniq -c  # removes adjacent duplicates -c gives line numbers
+NF # number of feilds, FS # field seperator, OFS # output field seperator 
+awk number record # look up, for pulling specific line
 
 
 --SPECIAL PARAMETERS--
 $#  num of arguments passed to shell
 $0  the script name
+111
+  
 $i  'i'th argument passed to the shell
 $*  gives all arguments passed to the shell
 $!  gives PID of last background running process
-$?  exit status of last command   0 == success 
+$?  exit status of last command   0 == success $(find /bin -type f -executable | sort )
 $_  gives last argument provided to previous command
 $$  gives PID of current shell
 $@  holds arguments passed to the scipt and treat them as an array
 $-  represents the current flag set in your shell (.himBH are the flags in bash) 
-​
-47
 
 
 --ORGANAZATIONAL OPORATORS--
@@ -82,6 +84,31 @@ sed -n '10p' # pulls the 10th line
 --SCRIPTING--
 vim <name>.sh && chmod +x <name>.sh
   #!/bin/bash
+
+--LOOOOPS--
+# iderates list of items
+for NAME in Marky Ricky Danny Terry Mickey Ari Jordi  # <-var can also be used here
+do
+echo $NAME  # <-code goes here
+done
+
+for value in {1..5}  # prints numbers 1-5, {5..1} can be used to print backwards
+do
+echo $value
+done
+
+for ((x=0;x<=5;x++))  # you know what this is -_^
+do
+echo"x is: $x"  # (( x++ )) can also be used to increment the var and  break  can be used to escape the loop
+done
+
+touch file{1..5}.txt  # creates file1.txt to file5.txt for setup
+for i in $(ls *.txt)  # iderates through the files
+do
+echo "$i"
+done
+
+
 
 
 
@@ -108,4 +135,5 @@ A9 String Subbing:
   awk -F: 'OFS=":"}{print $1,$2}' shadow.txt
 A10 String Sub:
   sed "/\/bin\/false/d:/\/bin\/sh/d" /etc/passed > passwd.txt
-  
+A11 find .bin files:
+  find / -type f -iname "*.bin" 2> /dev/null | awk -F/ '{OFS="/"}{$NF="";print $0}' | sort -u
