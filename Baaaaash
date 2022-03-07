@@ -49,7 +49,7 @@ awk number record # look up, for pulling specific line
 
 --SPECIAL PARAMETERS--
 $#  num of arguments passed to shell
-$0  the script name
+$0  the script namecompare
 111
   
 $i  'i'th argument passed to the shell
@@ -99,7 +99,9 @@ done
 
 for ((x=0;x<=5;x++))  # you know what this is -_^
 do
-echo"x is: $x"  # (( x++ )) can also be used to increment the var and  break  can be used to escape the loop
+echo"x is: $x"  # (( x++ )) can also be used to increment the var
+break  # can be used to escape the loop
+continue  # breaks to the next iteration of the loop
 done
 
 touch file{1..5}.txt  # creates file1.txt to file5.txt for setup
@@ -108,7 +110,44 @@ do
 echo "$i"
 done
 
+for word in $(cat <file>)  # iterate through words in a file, put "quotes" around "$(cat file)" and "$word" to print by line
+do 
+  echo $word
+done
 
+
+counter=1
+while [[ $counter -le 10 ]]
+do
+  echo $counter
+  ((counter++))
+done
+
+counter=1
+until [[ $counter -gt 10 ]]
+do
+  echo $counter
+  ((counter++))
+done
+
+while read line  # pars a file
+do
+  echo $line
+done < myfile.del
+
+--ifs--
+if [[ $(cat $filename) -lt 10 ]]   #if var $filename contains a number less than 10, SPACES FUCKING MATTER
+  then
+    echo "single digit"
+  elif [[ $(cat $filename) -ge 10 ]] && [[ $(cat $filename) -lt 100 ]]
+  then
+    echo "double digit"
+  elif [[ $(cat $filename) -ge 100 ]] && [[ $(cat $filename) -lt 1000 ]]
+  then
+    echo "triple digit"
+  else
+    echo "Error"
+fi
 
 
 
