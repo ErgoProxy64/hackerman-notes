@@ -1,0 +1,16 @@
+xfreerdp /u:student /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard
+
+# comment
+<# 
+multiline comment
+#>
+
+Get-Verb *
+Get-Command -noun *<searchWord>*
+Update-Help -Force # -Force is like sudo
+Get-Help <command> -online  # go to online help page on command
+
+Set-ExecutionPolicy -Scope 
+# multiple items are comma seperated
+
+Get-Alias <alias> # to get aliases & see what you do, must be saved to profile to keep persistince 
