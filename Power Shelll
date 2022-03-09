@@ -14,3 +14,4 @@ Set-ExecutionPolicy -Scope
 # multiple items are comma seperated
 
 Get-Alias <alias> # to get aliases & see what you do, must be saved to profile to keep persistince 
+Invoke-Expression <var>  #to run expression in var
