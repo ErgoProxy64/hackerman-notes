@@ -5,6 +5,8 @@ xfreerdp /u:student /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard
 multiline comment
 #>
 
+Get-PSDrive
+
 Get-Verb *
 Get-Command -noun *<searchWord>*
 Update-Help -Force # -Force is like sudo
@@ -15,3 +17,18 @@ Set-ExecutionPolicy -Scope
 
 Get-Alias <alias> # to get aliases & see what you do, must be saved to profile to keep persistince 
 Invoke-Expression <var>  #to run expression in var
+
+Get-ChildItem variable: # some Newcomb juju that displays all current variables
+
+--ARRAYS--
+$aVar = 1..10
+$aVar.Count  # number of elements in the array
+$aVar.Length # also does this
+
+$aVar += @(11..15)  # adds values 11-15 to the end of aVar
+$jagArr = "an",('array',('within','an')),"array"
+$jagArr[1][1][0] # prints 'an'
+
+$hashT = @{Publisher="THQ"; Game="WWE Something Probably"; Bankrupt="Yes"}  # hash table, an array with two sets of values
+$hashT.'Publisher'="Bethesda"  # changes value for "publisher" 
+$hashT.Remove('Publisher')  # removes that item
