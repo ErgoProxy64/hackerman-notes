@@ -20,7 +20,7 @@ Invoke-Expression <var>  #to run expression in var
 
 Get-ChildItem variable: # some Newcomb juju that displays all current variables
 
---ARRAYS--
+--Arrays--
 $aVar = 1..10
 $aVar.Count  # number of elements in the array
 $aVar.Length # also does this
@@ -32,3 +32,68 @@ $jagArr[1][1][0] # prints 'an'
 $hashT = @{Publisher="THQ"; Game="WWE Something Probably"; Bankrupt="Yes"}  # hash table, an array with two sets of values
 $hashT.'Publisher'="Bethesda"  # changes value for "publisher" 
 $hashT.Remove('Publisher')  # removes that item
+
+
+--Pipes n' Stuff-- 
+$a = 1
+$b = {1 + 1}  # creats $b as a script-block
+$a += $b    # this will error because $b must be ran before its used
+$a += &$b  # & will run the script-block
+
+Get-Process | Select-Object * # to see all output options, 'select' can be used as an alias for Select-Object, -exp before the val grabs only the data
+Get-Process | Sort-Object   # sorts on given -parameter, can use 'sort' instead
+Get-Process | Where-Object {$_.Name -notlike 'powershell*'}  # returns only the items with the status given, in this case not named powershell
+  | Get-Unique # removes duplicates
+  | Measure-Object Length # used to take measurments, can also use: Average Maximum Minimum Sum 
+
+Compare-Object 'one string' 'two string' -Property Length, Name  # compares the two objects on given properties
+
+1..10 | ForEach-Object { $_ * 2 }  # runs on each object in list
+Get-Service | Select-Object -First 10 | ForEach-Object{"The Service{0} is call "{1}': {2}" -f $_.Name, $_.DisplayName, $_.Status}  # used to format 
+
+--Custom Objects--+
+$Mytruck = New-Object Object
+Add-Member -MemberType NoteProperty -Name Color -Value Brown -InputObject $Mytruck
+Add-Member -Me NoteProperty -Na Make -Val Schwinn -In $Mytruck
+$Mytruck | Add-Member NoteProperty Cab "Extended Cab Hatchback Exellent"
+Add-Member -MemberType ScriptMethod -InputObject $Mytruck -Name Drive -Value {<do a thing>}
+Add-Member -InputObject $Mytruck ScriptMethod Accelerate {<do another thing>}
+$Mytruck | Add-Member ScriptMethod Park {<do more things>}
+
+$Mytruck.Make
+$Mytruck.Color
+$Mytruck.Drive()
+$Mytruck.Park()+
+
+
+--Comparison Operators--
+10 -ge 6
+1,2,3 -le 6
+"Blinky" -like "Bl?nky" # -like & -notlike are exact matches
+"Blinky" -match '[[a-z] # -match & -notmatch must just contain matches, -clike and -cmatch are use for case sensitive
+ # matches for -match will be stored in array matches[] and can be referenced later
+$someArray -contains 'some item' # -contains used to see if list has item in it
+
+Switch(10){
+  {9+1}{"this would get printed"}
+  {((10) -and (10+1))}{"this would not"}
+  default {"this prints if there is no match"}
+}
+
+--functions--
+function Get-Prod($n1,$n2,$n3){
+  return $n1 * $n2 * $n3$n
+}
+
+--Script writing--
+"string" > <fileName>
+
+@'
+multi
+line
+script
+'@ > <fileName>
+
+'"$args[2] Rules"' > scriptName.ps1  # writes the script in "" to scriptName.ps1
+.\scriptName.ps1 Newcomb Wathen Brace  # calls script with paramiters "Newcomb" "Wathen" "Brace"
+Brace Rules # output
