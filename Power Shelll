@@ -85,6 +85,35 @@ function Get-Prod($n1,$n2,$n3){
   return $n1 * $n2 * $n3$n
 }
 
+function Get-Prod{
+  param (
+    [Parameter(Mandatory=$true)] # makes n1 madatory
+    $n1,
+    $n2=3,    # gives default value to n2, can be overwriten when calling function
+    $n3
+  )
+  return $n1 * $n2 * $n3$n
+}
+
+function advanced($process) {
+  param (
+    [Parameter(Mandatory=$true)]
+    [int]$num1,
+    [Parameter(Mandatory=$true)]
+    [int]$num2
+  )
+  Begin {       # does this stuff first
+    $sum = 0 
+  }    
+  Process {   # then it does this stuff
+    $sum = $num1 + $num2 
+  }    
+  End {   # and ends with this stuff
+    $sum 
+  }    
+
+}
+
 --Script writing--
 "string" > <fileName>
 
