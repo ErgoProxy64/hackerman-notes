@@ -1,3 +1,9 @@
+$_ # current pipeline
+$input # all the inputs piped to function
+$args # a more raw version of input
+
+
+
 xfreerdp /u:student /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard
 
 # comment
