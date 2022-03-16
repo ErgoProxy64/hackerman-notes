@@ -1,0 +1,39 @@
+https://os.cybbh.io/public/os/latest/index.html
+
+ start2347
+ start85678
+
+## Command stuff
+
+get-process | get-member | where-object {$_.membertype -match "Method"}
+(get-process notepad*).kill()
+
+CIM/CIM  Get-CIMEnstance  # Can tab through classnames
+WMI/DCOM  Get-WMIObject  # Can't tab through classnames
+
+get-wmiobject -list | Where-Object {#_.Name -like "win32*"}
+
+<command> -ErrorAction SilentlyContinue  # removes error msg's
+<command> -Verbose  # gives feedback on normaly silent commands
+
+$PSVersionTable  # gives version info, Build Version indicates what you can run
+
+# PS checks PS profiles for config in this order:
+Current User, Current Host > Current User, All Hosts > All Users, Current Host > All Users, All Hosts 
+# ISE is the same but only checks on Current Host
+$profile | get-member -Type NoteProperty  # gets this ^ stuff
+# can be used to establish persistance 
+
+test-path -path #profile.CurrentUserCurrentHost   # checks if path exists
+new-item -ItemType file -path $profile -Force  # add profile
+ISE $profile    # add stuff to that profile
+
+[<namespace>]::<Function>(<Object>)   # how to use .NET API calls in powershell
+
+
+Remote Desktop Connection   3389    # me
+
+
+
+Get-ChildItem | select name,*target
+
