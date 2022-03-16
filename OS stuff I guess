@@ -1,7 +1,5 @@
 https://os.cybbh.io/public/os/latest/index.html
 
- start2347
- start85678
 
 ## Command stuff
 
@@ -24,7 +22,7 @@ Current User, Current Host > Current User, All Hosts > All Users, Current Host >
 $profile | get-member -Type NoteProperty  # gets this ^ stuff
 # can be used to establish persistance 
 
-test-path -path #profile.CurrentUserCurrentHost   # checks if path exists
+test-path -path $profile.CurrentUserCurrentHost   # checks if path exists
 new-item -ItemType file -path $profile -Force  # add profile
 ISE $profile    # add stuff to that profile
 
@@ -36,4 +34,3 @@ Remote Desktop Connection   3389    # me
 
 
 Get-ChildItem | select name,*target
-
