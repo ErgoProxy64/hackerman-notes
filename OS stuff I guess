@@ -1,5 +1,8 @@
 https://os.cybbh.io/public/os/latest/index.html
 
+http://10.50.22.25:8000/
+DABR-M-22003
+Winter@COSC!
 
 ## Command stuff
 
@@ -28,9 +31,49 @@ ISE $profile    # add stuff to that profile
 
 [<namespace>]::<Function>(<Object>)   # how to use .NET API calls in powershell
 
-
 Remote Desktop Connection   3389    # me
 
-
-
 Get-ChildItem | select name,*target
+
+
+###### Win Reg
+
+# database that contains system wide settings, it's like its own file system
+# use registry editor to edit
+# HKEY's are directories of keys split on stuff
+# HKEY_USERS contains keys on all users that have loged on to system, SID: 18=default?, 21=Domain, 500=Admin, 
+# HKEY_LOCAL_MACHINE contains what OS to load (under BCD00000), drivers (HARDWARE), user credz (SAM), LSAS and permisons (SECURITY), system wide programs (SOFTWARE), aand system settings (SYSTEM) like what starts on boot
+# HKEY_CLASSES_ROOT a symbolic lint to that users classes, contains file extension information
+
+# ignore SecurityHealth & OneDrive
+
+reg ?   # gives options for reg command, used to fuck around with registry
+reg query add hkcu\software\microsoft\windows\currentversion\run /v <name> /t <type> /d <file path>  # example of how to make new Reg key with reg
+
+Get-Item ; Get-ChildItem ; Get-ItemProperty   # used to query reg in PS, the better way to do stuff
+Get-Item -path "<path>"   # fuck these instructorsf
+gci registry::<key path>    # shows whats inside reg, can use wiled cards like *
+New-PSDrive -Name HKU - PSProvider Registry -Root HKEY_USERS    # makes a PSDrive on users
+Add-Content -Path $profile.AllUsersAllHosts -value '<all this ^ stuff>'   # makes system do this ^ on start up
+
+wmic useraccount  # shows SID
+
+New-Item <key path> -Name '<name>'    # adding reg items in PS
+New-ItemProperty <key path> -Name '<prop name>' -PropertyType string    # and changing its properties
+
+###### Alt Data Streams
+
+# everything in windows uses normal data stream
+
+echo "some text" > somefile.txt   # creates normal text file
+"some secret text" > somefile.txt:altfile.txt   # creates alt text file (in command prompt)
+dir /R    # shows alt data streams
+
+Set-Content -Value "more secret text" -Path .\somefile.txt -stream PSaltfile    # doing it in PS
+Get-Content -Path .\somefile.txt -Stream PSaltfile    # getting it in PS
+Get-Item <item to query> -Stream *
+
+Get-ChildItem -recurse | foreach {Get-Item $_.fullname -stream * -erroraction SilentlyContinue } | where stream -ne ':$data'  # searches for alt data streams  : seriously fuck these dumb ass mother fucking instructors who dont teach us shit
+
+
+
