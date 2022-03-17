@@ -9,6 +9,8 @@ https://git.cybbh.space/programming/bash/public/
 # comments :) can be referenced with ctrl r
 # explainshell.com is a good resorce for looking shit up
 !! #run last command
+<ctrl>u  # clears the line
+<ctrl>l  # clears screan without removing old stuff
 
 man -k <keyword> | grep <more keywords>  # searches for commands
 
@@ -28,6 +30,11 @@ ln -s <source> <link> #creates a symbolic link
 locate #searches based off database
 which <command> whereis <command> whatis <command> # shows location/location + man page location/discription of command
 2>/dev/null  #dump errors in da trash
+
+pushd /   # pushes the '/' dir to the dir stack
+dirs -v   # prints the stack
+ls ~2   # calls on dir in position 2
+popd    # pops dir off of stack
 
 --DATA OUTPUT--
 head/tail -n<num>
@@ -68,6 +75,7 @@ function <funName>()  { <code> }   #how to write a function in bash
 <VARIABLENAME>=$(<command>) # making variables in bash, $(<command>) can also be used to access a command in the middle of a string
 <variableName>=<string or int>  # variable for string or int
 ${<varName>}<string>  # how to ref a var in a string
+echo "$<var>"   # prints output in original format
 # ":" can be used instead of "/"
 sed 's/<pattern>/<replace_with>/g' <file> # "s" denotes replace, "g" means all instances, prints <file> with <pattern> replaced by <replace_with> 
 sed -i # replaces original file
