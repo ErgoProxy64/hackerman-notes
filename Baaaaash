@@ -31,6 +31,8 @@ locate #searches based off database
 which <command> whereis <command> whatis <command> # shows location/location + man page location/discription of command
 2>/dev/null  #dump errors in da trash
 
+find <search stuff> -exec   # used to execute on find results 
+
 pushd /   # pushes the '/' dir to the dir stack
 dirs -v   # prints the stack
 ls ~2   # calls on dir in position 2
