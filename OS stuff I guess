@@ -4,7 +4,8 @@ http://10.50.22.25:8000/
 DABR-M-22003
 Winter@COSC!
 
-## Command stuff
+
+###### Command stuff
 
 get-process | get-member | where-object {$_.membertype -match "Method"}
 (get-process notepad*).kill()
@@ -61,6 +62,7 @@ wmic useraccount  # shows SID
 New-Item <key path> -Name '<name>'    # adding reg items in PS
 New-ItemProperty <key path> -Name '<prop name>' -PropertyType string    # and changing its properties
 
+
 ###### Alt Data Streams
 
 # everything in windows uses normal data stream
@@ -74,6 +76,13 @@ Get-Content -Path .\somefile.txt -Stream PSaltfile    # getting it in PS
 Get-Item <item to query> -Stream *
 
 Get-ChildItem -recurse | foreach {Get-Item $_.fullname -stream * -erroraction SilentlyContinue } | where stream -ne ':$data'  # searches for alt data streams  : seriously fuck these dumb ass mother fucking instructors who dont teach us shit
+
+
+###### Linux file system
+
+xxd   # gives hex output of a file
+dd    # used to copy a file byte by byte
+openssl   # used to encrypt & decrypt files using specified encryption
 
 
 
