@@ -4,6 +4,7 @@ http://10.50.22.25:8000/
 DABR-M-22003
 Winter@COSC!
 
+xfreerdp /u:student /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard
 
 ###### Command stuff
 
@@ -83,6 +84,40 @@ Get-ChildItem -recurse | foreach {Get-Item $_.fullname -stream * -erroraction Si
 xxd   # gives hex output of a file
 dd    # used to copy a file byte by byte
 openssl   # used to encrypt & decrypt files using specified encryption
+
+
+###### Win Boot Process
+
+BIOS > MBR/Volume boot sector > bootmgr(or NTLDR) > BCD > Winload.exe/Winresume.exe > NTOSKRNL
+UEFI > EFI Partition > bootmgrfw.efi > BCD > Winload.efi/Winresume.efi > NTOSKRNL
+
+                       / CSRSS.exe   / LSASS.exe
+           / Session 0 - WININIT.exe - SVCHOST.exe
+SMSS.exe <
+           \ Session 1 - WINLOGON.exe - USERINIT.exe > Explorer.exe
+                       \ CSRSS.exe    \ LOGONUI.exe
+
+Sadness: https://git.cybbh.space/os/public/raw/master/images/winboot-06.jpg
+
+## BIOS or UEFI?
+Type C:\Windows\Panther\Setupact.log | findstr /i "Detected boot environment"   # or...
+Get-Content C:\Windows\Panther\Setupact.log | Select-String "Detected boot environment"
+
+bcdedit | findstr /i path   # .exe = BIOS, .efi = UFEI
+
+## Edit boot loader stuff
+bcdedit   # show Boot Manager
+bcdedit /set `{current`} description "Beyond Hell, Above Heaven"    # change discription
+bcdedit /set /deletevalue /displayorder /crate /export /import /delete /force
+
+Msinfo32.exe
+
+
+
+
+
+
+
 
 
 
