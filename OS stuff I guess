@@ -88,8 +88,8 @@ openssl   # used to encrypt & decrypt files using specified encryption
 
 ###### Win Boot Process
 
-BIOS > MBR/Volume boot sector > bootmgr(or NTLDR) > BCD > Winload.exe/Winresume.exe > NTOSKRNL
-UEFI > EFI Partition > bootmgrfw.efi > BCD > Winload.efi/Winresume.efi > NTOSKRNL
+BIOS > MBR/Volume boot sector > bootmgr(or NTLDR) > BCD > Winload.exe/Winresume.exe > NTOSKRNL > System
+UEFI > EFI Partition > bootmgrfw.efi > BCD > Winload.efi/Winresume.efi > NTOSKRNL > System
 
                        / CSRSS.exe   / LSASS.exe
            / Session 0 - WININIT.exe - SVCHOST.exe
@@ -113,11 +113,57 @@ bcdedit /set /deletevalue /displayorder /crate /export /import /delete /force
 Msinfo32.exe
 
 
+###### Linux Boot
 
+BIOS = Basic in/out system, ececutes MBR
+MBR = Master boot record, eceutes GRUB
+GRUB = bootloader, eceutes Kernel
+Kernel = executes /bin/init
+Init = executes runlevel programs
+Runlevel = programs are ececuted from /etc/rc.d/rc*.d/
 
+lsblk -f    # shows drives or some shit
 
+sudo xxd -l 512 -g 1 /dev/sda   # get MBR hex stuff
 
+sudo dd if=<file2copy> [of=<outFile>] bs=1 count=512   # copy part of a file, bs is block size and count is 512 to get just boot stuff of MBR
 
+less /boot/grub/grub.cfg   # shows grub config
+linux /boot/vmlinuz-otherstuff:P  # the line that starts the kernel looks like this, put single after the "ro" to get root access
 
+lsmod   # lists modules
+
+# kernel is process 0 [kthreadd]
+# init process is PID 1
+
+## SYSV
+cat /etc/inittab    # shows system environment config
+# run levels: 0=halt, 1=single-user,no-network, 2=multi-user,no-network, 3=multi-user,network, 4=user-defined, 5=X11,multi-user,networking, 6=reboot
+# service info: Script Location: /etc/rc<#>.d/   Called From: /etc/init.d/    (should only have init.d stuff)
+
+## SYSTEMD
+ls -l /lib/systemd/system/default.target    # shows system run level
+run levels: 0=poweroff.target, 1=resue.target, 2-4=multi-user.target, 5=graphical.target, 6=reboot.target
+# Config Location: /etc/systemd/system/   Linked To: /lib/systemd/system/
+sudo systemctl list-dependencies graphical.target   # List unit dependencies in a tree form
+# services under a target are its wants, the last one is a need and the next target
+sudo systemctl show -p Wants graphical.target    # shows wants
+systemctl list-unit-files   # shows some other stuff, something about service timmers
+# systemctl command does alot of stuff: https://os.cybbh.io/public/os/latest/007_linux_boot_process/linboot_fg.html#_6_2_4_systemd_putting_it_all_together
+
+## Loaded at boot/login
+#/etc/environment   read once when the machine completes Init, PATH variable is the search path for executables from the command line
+#/etc/profile   executes whenever a user logs into an interactive shell, system-wide
+#/etc/bash.bashrc   interactive nonlogin shells, system-wide
+#~/.profle | ~/.bash_profile    similar to /etc/profile but for a given user
+#~/.bashrc    similar to /etc/bash.bashrc but for a given user
+
+###### Some tunnel stuff :P
+
+ssh <user>@<IP of Admin> -L <RHP1>:<IP of Terra>:22 -L <RHP2>:<IP of M-Terra>:22
+                         
+                         
+ssh <Terra user>@localhost -p <RHP1>
+ssh <M-Terra user>@localhost -p <RHP2>
 
 
