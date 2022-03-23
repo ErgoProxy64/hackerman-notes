@@ -185,8 +185,17 @@ schtasks /query /tn "<taskFullPath>" /v /fo list  # shows information on a speci
 Get-ScheduledTask | where taskname -like "<taskName>" | select *    # more info on a scheduled task
 # or just use gui: task scheduler, click TS library and click task
 
-## 
+## Sysinternals
 
+Procmon64.exe -accepteula   # options tab > Enable Boot Logging > [restart system]
+ZoomIt64.exe -accepteula    # beefed up taskmanager
+Autoruns.exe    # shows stuff that starts automaticly
+tcpview64.exe   # network stuff
+PsExec64.exe    # can be used to run scripts on a remote system encryptedly
+PsLoggedon64.exe    # shows who is logged in to the system, to not use on DC
+LoggonSessons.ese   # shows a list of loggons and their type
+psinfo    # OS info
+handle64.exe    # lets you fuck with handles
 
 
 
