@@ -197,7 +197,9 @@ LoggonSessons.ese   # shows a list of loggons and their type
 psinfo    # OS info
 handle64.exe    # lets you fuck with handles
 
+## User Account Control
 
+# only gui, 
 
 
 
