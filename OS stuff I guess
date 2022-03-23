@@ -59,7 +59,7 @@ New-PSDrive -Name HKU - PSProvider Registry -Root HKEY_USERS    # makes a PSDriv
 Add-Content -Path $profile.AllUsersAllHosts -value '<all this ^ stuff>'   # makes system do this ^ on start up
 
 wmic useraccount  # shows SID
-
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
 New-Item <key path> -Name '<name>'    # adding reg items in PS
 New-ItemProperty <key path> -Name '<prop name>' -PropertyType string    # and changing its properties
 
@@ -187,8 +187,13 @@ Get-ScheduledTask | where taskname -like "<taskName>" | select *    # more info 
 
 ## Sysinternals
 
+# how to scp Sysinternals onto machine
+mkdir C:\SysInternals
+scp andy.dwyer@<IP>:C:\SysInternals\* C:\SysInternals\
+or net use * http://live.sysinternals.com
+
 Procmon64.exe -accepteula   # options tab > Enable Boot Logging > [restart system]
-ZoomIt64.exe -accepteula    # beefed up taskmanager
+procexp.exe -accepteula    # beefed up taskmanager
 Autoruns.exe    # shows stuff that starts automaticly
 tcpview64.exe   # network stuff
 PsExec64.exe    # can be used to run scripts on a remote system encryptedly
