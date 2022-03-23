@@ -50,7 +50,7 @@ Get-ChildItem | select name,*target
 # ignore SecurityHealth & OneDrive
 
 reg ?   # gives options for reg command, used to fuck around with registry
-reg query add hkcu\software\microsoft\windows\currentversion\run /v <name> /t <type> /d <file path>  # example of how to make new Reg key with reg
+reg query add hkcu\software\microsoft\windows\currehttps://os.cybbh.io/public/os/latest/index.htmlntversion\run /v <name> /t <type> /d <file path>  # example of how to make new Reg key with reg
 
 Get-Item ; Get-ChildItem ; Get-ItemProperty   # used to query reg in PS, the better way to do stuff
 Get-Item -path "<path>"   # fuck these instructorsf
@@ -158,12 +158,54 @@ systemctl list-unit-files   # shows some other stuff, something about service ti
 #~/.profle | ~/.bash_profile    similar to /etc/profile but for a given user
 #~/.bashrc    similar to /etc/bash.bashrc but for a given user
 
+
 ###### Some tunnel stuff :P
 
 ssh <user>@<IP of Admin> -L <RHP1>:<IP of Terra>:22 -L <RHP2>:<IP of M-Terra>:22
-                         
-                         
+                                      
 ssh <Terra user>@localhost -p <RHP1>
 ssh <M-Terra user>@localhost -p <RHP2>
+
+
+###### Win Process
+
+# services are processes that run in the background and don't require user interaction
+# " get-process "or use " Get-WmiObject Win32_Process | select * "   good tags are: commandline, handles (modules for process)
+# can use " | where ProcessID -like "<pid> | select <whatever> " to pull specific processes
+# use " | ft <tags selected> -AutoSize | out-flile -width 4096 <filepath> " to see all
+
+tasklist /m /fi "IMAGENAME eq powershell_ise.exe"   # shows all handles for powershell ise
+
+#services should come from (Path) C:\windows\system32\svchost.exe and commandline should match
+sercvices.msc   # gui service list
+sc.exe    # non gui service list, can be used with " showsid <serviceName> " to show sid for specific service (even if it does not exist)
+Get-WmiObject Win32_service | select *    # shows service stuff, 
+
+schtasks /query /tn "<taskFullPath>" /v /fo list  # shows information on a specific scheduled task
+Get-ScheduledTask | where taskname -like "<taskName>" | select *    # more info on a scheduled task
+# or just use gui: task scheduler, click TS library and click task
+
+## 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
