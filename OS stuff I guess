@@ -238,6 +238,8 @@ sudo lsof   # shows files that have been opened by processes, use tail to see mo
 ## cron jobs
 
 # FG: https://os.cybbh.io/public/os/latest/010_linux_processes/linproc_fg.html#_6_5_cron_jobs
+# cron daemon checks the directories /var/spool/cron, /etc/cron.d and the file /etc/crontab
+
 crontab -u [user] file    # This command will load the crontab data from the specified file
 crontab -l -u [user]    # This command will display/list user’s crontab contents
 crontab -r -u [user]    # This Command will remove user’s crontab contents
