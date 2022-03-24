@@ -144,7 +144,7 @@ cat /etc/inittab    # shows system environment config
 ## SYSTEMD
 ls -l /lib/systemd/system/default.target    # shows system run level
 run levels: 0=poweroff.target, 1=resue.target, 2-4=multi-user.target, 5=graphical.target, 6=reboot.target
-# Config Location: /etc/systemd/system/   Linked To: /lib/systemd/system/
+# Service info: Config Location: /etc/systemd/system/   Linked To: /lib/systemd/system/
 sudo systemctl list-dependencies graphical.target   # List unit dependencies in a tree form
 # services under a target are its wants, the last one is a need and the next target
 sudo systemctl show -p Wants graphical.target    # shows wants
@@ -204,12 +204,44 @@ handle64.exe    # lets you fuck with handles
 
 ## User Account Control
 
-# only gui, 
+# just look at the FG
 
 
+###### Linux processes
 
+# Kernel processes forked from: [kthreadd] (PID=2)
+# user processes forked from: /sbin/init (PID=1)
 
+ps -elf   # process list snap shot
+top   # live process list, htop does it a little cooler
+ps --ppid 2 -Nlf --forest   # shows processes started by kernel (I think?), --forest shows whos a parent of who
 
+# fork()ing takes the process, creates a clone of it and runs the new process from that
+# exec() replaces that program with whats in the ()
+# zombie processes are processes that are finished but the parent hasn't ended so they just sit there, menacingly, denoted with a "z" in ps
+# orphan processes are processes that parent has died and so they were adopted by init
+disown -a && exit   # forces child processes to be orphaned
+
+# daemons are background processes
+systemctl list-units    # lists active system units, including timers that can be used to schedule stuff
+systemctl status ssh    # gets status of a service (ssh in this case)
+
+# 'fg' or 'bg' pushes/pulls jobs to foreground/background
+
+# etc/inittab is where init gets its instructions on what processes to start
+
+ls -l /proc/    # List all the proc directories, contains info for processes
+cat /proc/net/udp(or tcp)   # shows open ports, can then lsof and grep on inode to get the process using it :P
+
+sudo lsof   # shows files that have been opened by processes, use tail to see most recent or '-c <process name>' or '-p <pid>'
+
+## cron jobs
+
+# FG: https://os.cybbh.io/public/os/latest/010_linux_processes/linproc_fg.html#_6_5_cron_jobs
+crontab -u [user] file    # This command will load the crontab data from the specified file
+crontab -l -u [user]    # This command will display/list user’s crontab contents
+crontab -r -u [user]    # This Command will remove user’s crontab contents
+crontab -e -u [user]    # This command will edit user’s crontab contents
 
 
 
