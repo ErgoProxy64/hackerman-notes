@@ -6,6 +6,15 @@ Winter@COSC!
 
 xfreerdp /u:student /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard
 
+
+###### Some tunnel stuff :P
+
+ssh <user>@<IP of Admin> -L <RHP1>:<IP of Terra>:22 -L <RHP2>:<IP of M-Terra>:22 -NT
+                                      
+ssh <Terra user>@localhost -p <RHP1>
+ssh <M-Terra user>@localhost -p <RHP2>
+
+
 ###### Command stuff
 
 get-process | get-member | where-object {$_.membertype -match "Method"}
@@ -157,14 +166,6 @@ systemctl list-unit-files   # shows some other stuff, something about service ti
 #/etc/bash.bashrc   interactive nonlogin shells, system-wide
 #~/.profle | ~/.bash_profile    similar to /etc/profile but for a given user
 #~/.bashrc    similar to /etc/bash.bashrc but for a given user
-
-
-###### Some tunnel stuff :P
-
-ssh <user>@<IP of Admin> -L <RHP1>:<IP of Terra>:22 -L <RHP2>:<IP of M-Terra>:22
-                                      
-ssh <Terra user>@localhost -p <RHP1>
-ssh <M-Terra user>@localhost -p <RHP2>
 
 
 ###### Win Process
