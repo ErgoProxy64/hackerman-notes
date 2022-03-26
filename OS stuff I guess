@@ -247,6 +247,51 @@ crontab -r -u [user]    # This Command will remove user’s crontab contents
 crontab -e -u [user]    # This command will edit user’s crontab contents
 
 
+###### Win Audit & Logs
+
+Get-LocalUser   # show local Users and SID on a system
+Get-WmiObject   # show local and domain Users and SID
+
+gci 'C:\$RECYCLE.BIN' -Recurse -Verbose -Force | select *   # shows items in recycle bin
+# all contain desktop.ini, should be 129 bits
+Get-Content 'C:\Recycle.Bin\<UID>\<File>    # get content of trashed file
+
+Get-ItemProperty 'REGISTRY::HKEY_USERS\<username>\Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\<GUID>\Count'  
+# shows UserAssist registry key, tracks the GUI-based programs that were ran by a particular user
+
+Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\bam\state\UserSettings\*'   # also may be in \bam\UserSettings\* in older systems
+# BAM is a Windows service that Controls activity of background applications
+
+Get-Childitem -Path 'C:\Windows\Prefetch' -ErrorAction Continue | select -First <number>    
+# prefetch, applications that are run from a specific location for the first time
+
+Get-Childitem -Recurse C:\Users\*\AppData\Roaming\Microsoft\Windows\Recent -ErrorAction Continue | select FullName, LastAccessTime
+# shows jump lists, items that have been frequently or recently used
+[System.Text.Encoding]::Unicode.GetString((gp "REGISTRY::HKEY_USERS\*\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\.txt")."<prop Num>")
+# Converts a Single Value from Hex to Unicode
+
+## check browser history
+.\strings.exe 'C:\users\andy.dwyer\AppData\Local\Google\Chrome\User Data\Default\History' -accepteula   # most frequent
+.\strings.exe 'C:\users\andy.dwyer\AppData\Local\Google\Chrome\User Data\Default\Top Sites'   # Top sites
+.\strings.exe  'C:\users\andy.dwyer\AppData\Local\Google\Chrome\User Data\Default\Login Data'   # shows user names
+
+$History = (Get-Content 'C:\users\student\AppData\Local\Google\Chrome\User Data\Default\History') -replace "[^a-zA-Z0-9\.\:\/]",""
+$History| Select-String -Pattern "(https|http):\/\/[a-zA-Z_0-9]+\.\w+[\.]?\w+" -AllMatches|foreach {$_.Matches.Groups[0].Value}| ft
+# shows FQDN
+
+## Auditing & logs
+
+auditpol /get /category:*    # Shows all of the Audit Policy settings
+
+Get-EventLog -LogName *   # 
+
+
+
+
+
+
+
+
 
 
 
