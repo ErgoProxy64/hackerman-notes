@@ -56,6 +56,7 @@ Get-ChildItem | select name,*target
 # HKEY_LOCAL_MACHINE contains what OS to load (under BCD00000), drivers (HARDWARE), user credz (SAM), LSAS and permisons (SECURITY), system wide programs (SOFTWARE), aand system settings (SYSTEM) like what starts on boot
 # HKEY_CLASSES_ROOT a symbolic lint to that users classes, contains file extension information
 
+ISE $profile    # add stuff to that profile
 # ignore SecurityHealth & OneDrive
 
 reg ?   # gives options for reg command, used to fuck around with registry
@@ -308,7 +309,7 @@ dmesg   # Device Messenger (queires /proc/kmsg)
 
 # All logs are in /var, most are in /var/log
 # Config File: /etc/rsyslog.conf
-  *.info    # info and less severe
+  *.info    # info and more severe
   *.=info   # only info
   *.*;aut,authprov.none   #everything but aut & authprov
   @ = udp
@@ -326,14 +327,6 @@ journalctl -u ssh.service   # specifes a service, in this case ssh, use: ' --sin
 ## XML & JSON
 
 
-
-
-
-
-
-
-
-
-
+Emergency,Alert,Critical,Error,Warning,Notice,Informational,Debug
 
 
