@@ -326,7 +326,6 @@ journalctl -u ssh.service   # specifes a service, in this case ssh, use: ' --sin
 
 ## XML & JSON
 
+xpath -q -e '<expr>' <filepath>
 
-Emergency,Alert,Critical,Error,Warning,Notice,Informational,Debug
-
-
+jq . <file>
