@@ -329,3 +329,28 @@ journalctl -u ssh.service   # specifes a service, in this case ssh, use: ' --sin
 xpath -q -e '<expr>' <filepath>
 
 jq . <file>
+
+
+###### Memory Forensics
+
+#Order of Volatility From Most to Least:
+CPU registers, cache > Routing table, ARP, process table, memory > Temporary file systems > Disk > Monitoring data > Physical configuration, network topology > Archival media - backups
+
+## Volatility
+
+.\<volatility.exe filepath> -h   # shows options
+.\<volatility.exe filepath> -f .\<memFilePath> imageinfo    # get info for file
+.\<volatility.exe filepath> -f .\<memFilePath> --profile=WinXPSP2x86    # set profile to winXP, still requires another option
+.\<volatility.exe filepath> -f .\<memFilePath> --profile=WinXPSP2x86 procdump -p <pid> -D .   # check a specific process
+
+
+
+
+
+
+
+
+
+
+
+
