@@ -193,7 +193,7 @@ Get-ScheduledTask | where taskname -like "<taskName>" | select *    # more info 
 # how to scp Sysinternals onto machine
 mkdir C:\SysInternals
 scp andy.dwyer@<IP>:C:\SysInternals\* C:\SysInternals\
-or net use * http://live.sysinternals.com
+or: net use * http://live.sysinternals.com
 
 Procmon64.exe -accepteula   # options tab > Enable Boot Logging > [restart system]
 procexp.exe -accepteula    # beefed up taskmanager
