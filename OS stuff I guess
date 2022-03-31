@@ -344,7 +344,9 @@ CPU registers, cache > Routing table, ARP, process table, memory > Temporary fil
 .\<volatility.exe filepath> -f .\<memFilePath> --profile=WinXPSP2x86 procdump -p <pid> -D .   # check a specific process
 
 
+###### Active Directory
 
+https://os.cybbh.io/public/os/latest/014_windows_ad/active_fg.html#_2_enumerate_users
 
 
 
