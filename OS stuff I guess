@@ -159,6 +159,7 @@ sudo systemctl list-dependencies graphical.target   # List unit dependencies in 
 # services under a target are its wants, the last one is a need and the next target
 sudo systemctl show -p Wants graphical.target    # shows wants
 systemctl list-unit-files   # shows some other stuff, something about service timmers
+systemctl cat <service>   # reads service file, Kill thought it was important
 # systemctl command does alot of stuff: https://os.cybbh.io/public/os/latest/007_linux_boot_process/linboot_fg.html#_6_2_4_systemd_putting_it_all_together
 
 ## Loaded at boot/login
