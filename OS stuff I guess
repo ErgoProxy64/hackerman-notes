@@ -37,6 +37,7 @@ $profile | get-member -Type NoteProperty  # gets this ^ stuff
 # can be used to establish persistance 
 
 test-path -path $profile.CurrentUserCurrentHost   # checks if path exists
+get-content $profile.CurrentUserCurrentHost   # look at PS profile (I think)
 new-item -ItemType file -path $profile -Force  # add profile
 ISE $profile    # add stuff to that profile
 
