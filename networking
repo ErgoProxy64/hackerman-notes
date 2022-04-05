@@ -8,8 +8,13 @@ Password: password
 
 ###### 'Fun'damentals
 
-
-
+## scapy
+sudo scapy    # start scapy
+a=Ether()   # create ethernet header
+a.show()    # shows stuff
+a.type=0x0806   # assign ethernet header
+b=ARP()   # create arp header
+sendp(a/b, iface="eth0")    # send packet across the wire
 
 
 
