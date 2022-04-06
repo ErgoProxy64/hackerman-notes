@@ -30,6 +30,12 @@ tcpdump  port <port#>   # specify port number
 tcpdump -n    # shows ip and port number instead of host name and ports protocall
 # use Berkeley Packet Filters to parse for specific packets
 tcp[<byte2check>] & 0x<bits2check> = 0x<bits>   # breakdown of checking bits using BPF
+tcp[13] & 0x11 = 0x11   # example of this ^
+
+
+
+
+
 
 
 
