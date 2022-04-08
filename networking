@@ -33,6 +33,7 @@ tcp[<byte2check>] & 0x<bits2check> = 0x<bits>   # breakdown of checking bits usi
 tcp[13] & 0x11 = 0x11   # example of this ^
 
 
+###### Packet Creation & Socket Programming
 
 
 
