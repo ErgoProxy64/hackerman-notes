@@ -33,12 +33,16 @@ tcp[<byte2check>] & 0x<bits2check> = 0x<bits>   # breakdown of checking bits usi
 tcp[13] & 0x11 = 0x11   # example of this ^
 
 
-###### Packet Creation & Socket Programming
+###### Network Recon
 
-
-
-
-
+# Passive Recon: Gathering info without direct interaction
+whois <ip>    # gives info on website
+dig <website>   # gives IPs for a website, end with SOA to get SOA info, end with TXT to get text stuff
+nmap <options> <targetIP/Subnet>    # nmap scan, -Pn don't ping host first, 
+nc <options> <targetIP> <port>  # netcat can be used to bannergrab
+sudo arp    # check arp cache
+wget <targetIP> -r    # gets public files from host recursively
+# use 'show configuration' to get info on routers
 
 
 
