@@ -42,7 +42,7 @@ nmap <options> <targetIP/Subnet>    # nmap scan, -Pn don't ping host first,
 nc <options> <targetIP> <port>  # netcat can be used to bannergrab
 sudo arp    # check arp cache
 wget <targetIP> -r    # gets public files from host recursively
-# use 'show configuration' to get info on routers
+# use 'show configuration' to get info on routers or 'show int' for more stream line interface view
 
 
 
