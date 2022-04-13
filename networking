@@ -38,11 +38,51 @@ tcp[13] & 0x11 = 0x11   # example of this ^
 # Passive Recon: Gathering info without direct interaction
 whois <ip>    # gives info on website
 dig <website>   # gives IPs for a website, end with SOA to get SOA info, end with TXT to get text stuff
-nmap <options> <targetIP/Subnet>    # nmap scan, -Pn don't ping host first, 
+nmap <options> <targetIP/Subnet>    # nmap scan
+nmap <ip> -Pn -p <port-range>   # scan for open ports, -Pn don't ping host first 
 nc <options> <targetIP> <port>  # netcat can be used to bannergrab
 sudo arp    # check arp cache
 wget <targetIP> -r    # gets public files from host recursively
 # use 'show configuration' to get info on routers or 'show int' for more stream line interface view
+
+
+###### Data transfer
+
+scp <username>@<IP>:/path/to/file .   # copies file at filepath from IP to current dir
+scp /path/to/file <username>@<IP>:/to/location   # copy files to IP
+scp -3 <fromUser@<fromIP>:/path/to/file <toUser>@<toIP>:/to/location    # transfer files from remote box to remote box
+
+nc -lp <port>   # sets up listening port, add -v for verbose
+nc <IP> <port>    # connects to listening port at IP, can be used to banner grab
+
+nc -lvp <port> < <file>   # set up listening port to send a file from
+nc -v -w1 <IP> <port> > <newfilename>   # get file from IP, arrows can be reversed to send the other way
+
+mknod mypipe p    # creates pipe file called "mypipe"
+nc <listener1IP> <port1> 0< mypipe | nc <listener2IP> <port2> 1> mypipe   # creates client relay
+nc -l -p <port1> < <infile>    # done on listener1, sends info
+nc -l -p <port2> > <outfile>   # done on listener2, receives info
+
+
+###### Tunneling
+
+## ssh local port forwarding
+ssh -L <local bind port>:<tgt ip>:<tgt port> -p <alt port> <user>@<pivot ip> -NT
+
+## local port forwarding throug a local port
+ssh student@<IP1> -L <port1>:<IP2>:22 -NT   # sets up port on your host to send stuff to IP2 through IP1
+ssh student@localhost -p <port1> -L <port2>:<IP3>:80 -NT    # connects to local port to connect through tunnel and sets up another tunnel on IP2 to IP3
+firefox localhost:<port2>   # connects through tunnels
+
+## Dynamic port forwarding, allows for the use of scripts and other programs
+ssh -D <port> -p <alt port> <user>@<pivot ip> -NT
+
+
+
+
+
+
+
 
 
 
