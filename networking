@@ -6,6 +6,9 @@ student4
 Command: ssh student@10.50.33.160 -X
 Password: password
 
+Tunnel Ports:
+10400-10499
+
 ###### 'Fun'damentals
 
 ## scapy
@@ -75,12 +78,31 @@ ssh student@localhost -p <port1> -L <port2>:<IP3>:80 -NT    # connects to local 
 firefox localhost:<port2>   # connects through tunnels
 
 ## Dynamic port forwarding, allows for the use of scripts and other programs
-ssh -D <port> -p <alt port> <user>@<pivot ip> -NT
+ssh <user>@<pivot ip> -D 9050 -p <alt port> -NT   # use @localhost when going through tunnels
+
+proxychains ./scan.sh   # use "proxychains" to run tools through dynamic tunnel
+proxychains ssh student@<IP>
+
+## remote port forwarding
+ssh -p <optional alt port> <user>@<remote ip> -R <remote bind port>:localhost:<tgt port> -NT   # remote IP & port is on your box
 
 
+###### Net Recon
 
-
-
+# Host Discovery (scan script, nmap, nc, ping sweep)
+# Port Discovery (scan script, nmap, nc)
+# Port Validation (bannergrabing - nc)
+# Follow up (based on port found)
+  # 22 or 23: connect to it and do passive recon
+  # 21 or 80: wget -r <ip> or wget -r ftp://<ip>
+  
+## pasive recon
+# hostname (hostname)
+# other listening ports (ss -nltp)
+# other interfaces/subnet (ipconfig -or- ip a)
+# files of interest (find)
+# check for tools (the whole thing is the command): which nmap nc tcpdump wireshark wget telnet
+# ping sweep: for i in (1..254): do (ping -c 1 <first.three.oct>.$i | grep "bytes from" &) ;done
 
 
 
