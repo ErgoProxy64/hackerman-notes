@@ -102,7 +102,7 @@ ssh -p <optional alt port> <user>@<remote ip> -R <remote bind port>:localhost:<t
 # other interfaces/subnet (ipconfig -or- ip a)
 # files of interest (find / -name hint* 2> /dev/null -or- find / -name flag* 2> /dev/null) (open images: eom)
 # check for tools (the whole thing is the command): which nmap nc tcpdump wireshark wget telnet
-# ping sweep: for i in {1..254}; do (ping -c 1 <first.three.oct>.$i | grep "bytes from" &) ;done
+# ping sweep: for i in {1..254}; do (ping -c 1 <first.three.oct>.$i | grep "bytes from" &) 2> /dev/null ;done
 
 
 
