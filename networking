@@ -26,7 +26,7 @@ tools > firewall rules    # shows how to write firewall rules
 # use sudo
 tcpdump -D    # lists all available interfaces
 tcpdump -i eth0   # specify interface "eth0"
-tcpdump -xx   # more info
+tcpdump -xx   # more info, hex dump (might be -XX)
 tcpdump -w    # write to a file
 tcpdump -r <file>   # read a pcap
 tcpdump  port <port#>   # specify port number
@@ -73,7 +73,9 @@ nc -l -p <port2> > <outfile>   # done on listener2, receives info
 ssh -L <local bind port>:<tgt ip>:<tgt port> -p <alt port> <user>@<pivot ip> -NT
 
 ## local port forwarding throug a local port
-ssh student@<IP1> -L <port1>:<IP2>:22 -NT   # sets up port on your host to send stuff to IP2 through IP1
+ssh student@<IP1> -L <port1>:<IP2>:22 -NT   # sets up port on your host , range, or any.
+165
+# Source Port - one, multiple, any, or range of ports. Direction - either inbound or in and outbouto send stuff to IP2 through IP1
 ssh student@localhost -p <port1> -L <port2>:<IP3>:80 -NT    # connects to local port to connect through tunnel and sets up another tunnel on IP2 to IP3
 firefox localhost:<port2>   # connects through tunnels
 
@@ -159,13 +161,26 @@ nft add rule ip NAT PREROUTING iif eth0 tcp dport { 80, 443 } dnat 10.1.0.3   # 
 nft add rule ip NAT POSTROUTING ip saddr 10.1.0.0/24 oif eth0 masquerade    # Source NAT w/ masquerade
 nft add rule ip NAT PREROUTING tcp dport 80 redirect to 8080    # Destination NAT (port forwarding) with redirect
 
+## Snort ruels
+[action] [protocol] [s.ip] [s.port] [direction] [d.ip] [d.port] ( match conditions ;)   # Action - such as alert, log, pass, drop, reject.
+# Protocol - includes TCP, UDP, ICMP and others. Source IP address - single address, CIDR notation, range, or any.
+# Source Port - one, multiple, any, or range of ports. Direction - either inbound or in and outbound.
+# Destination IP address - options mirror Source IP. Destination port - options mirror Source port.
+
+# Examples:
+alert tcp any any -> any 21 (msg:"Anonymous FTP Login"; content: "anonymous"; sid:2121; )   # Look for anonymous ftp traffic
+alert tcp any any -> any 21 (msg:"Anonymous FTP Login"; content: "anonymous"; offset:5; sid:2121; )   # Will start looking at byte 6 in the payload
+alert tcp any any -> any 21 (msg:"Anonymous FTP Login"; content: "anonymous"; depth:14; sid:2121; )   # Search first 14 bytes for the word “anonymous”.
+alert tcp any any -> any 21 (msg:"Anonymous FTP Login"; content: "anonymous"; nocase; sid:2121; )   # Deactivates the case sensitivity of a text search.
+
+sudo snort -D -l /var/log/snort/ -c /etc/snort/snort.conf   # starts snort
+sudo snort -r <snort file>  # checks rules against a snort file
 
 
 
-
-
-
-
+  ,,__
+ o"   )~
+  '''' 
 
 
 
