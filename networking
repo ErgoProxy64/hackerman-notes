@@ -91,7 +91,7 @@ ssh -p <optional alt port> <user>@<remote ip> -R <remote bind port>:localhost:<t
 
 ###### Net Recon
 
-# Host Discovery (scan script, nmap, nc, ping sweep)
+# Host Discovery (scan script, nmap, nc, ping sweep), (ip neighbor | grep -v FAILED)
 # Port Discovery (scan script, nmap, nc)
 # Port Validation (bannergrabing - nc)
 # Follow up (based on port found)
@@ -185,7 +185,7 @@ sudo snort -r <snort file>  # checks rules against a snort file
 
 
 
-
+'ip[1] & 252 = 26 && ip[16:4] = 0A000067'
 
 
 
