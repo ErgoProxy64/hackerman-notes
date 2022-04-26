@@ -1,1 +1,49 @@
 
+Usr: DABR-003-M
+Pwd: IMO2qzSSbZMCdWv	
+Piv: 10.50.35.227
+
+http://10.50.22.9:8000/
+
+winops: 192.168.65.10, 10.50.25.36    xfreerdp /v:10.50.25.36 /u:student /p:password /dynamic-resolution +clipboard
+linops: 192.168.65.20, 10.50.32.167   ssh -X student@10.50.32.167
+creds: student // password
+
+###### System Recon
+
+cat /etc/os-release   # os ver
+lsb_release -a    # more os ver
+uname -a    # kernel ver
+hostnamectl   # kernel & os ver
+# can be used in https://www.exploit-db.com/ to find exploites
+
+## webpage scraping python script:
+import lxml.html
+import requests
+
+page = requests.get('http://quotes.toscrape.com')
+tree = lxml.html.fromstring(page.content)
+
+authors = tree.xpath('//small[@class="author"]/text()')   # 
+
+print ('Authors: ',authors)
+# script end
+
+## Scanning
+1) Host Discovery
+for i in {1..254}; do (ping -c 1 <first.three.oct>.$i | grep "bytes from" &) 2> /dev/null ;done   # ping sweep in bash
+2) Host Enumeration
+nmap <ip> -p- -T4   # quick scans all ports, use -Pn when using proxychains
+3) Host Interrogation
+nmap <ip> -Pn -T4 -sV -p <port>   # grabs version of service on ports for service validation
+
+## nmap scripts
+cat /usr/share/nmap/scripts/<scriptName>    # shows more information on script
+nmap -Pn -T4 <ip> --script=<scriptName> -p <ports>    # runs a nmap script
+nmap -Pn -T4 <ip> --script="<catName>" -p <ports>    # runs all nmap scripts that have the "catName" catagory
+
+
+
+
+
+
