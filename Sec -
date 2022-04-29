@@ -233,5 +233,5 @@ atoi(char)		# ascii to interger
 strtok(string)		# splits string on white space
 scanf()		# reads from stdin
 
-
+https://www.tutorialspoint.com/cprogramming/index.htm
 
