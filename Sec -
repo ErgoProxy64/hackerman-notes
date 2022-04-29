@@ -204,15 +204,34 @@ http://10.50.21.144/uniondemo.php?Selection=2 UNION select 1,2,load_file('/etc/p
 # @@version can be used the same way to get SQL version number
 
 
+###### Reverse Engineering
 
+# There are 16 General Registers:
+	# Accumulator register(AX) used for arithmetic operations
+	# Counter register(CX). Used ifor shift instructions and loops.
+	• Data register (DX). Used in arithmetic operations and I/O operations.
+	• Base register (BX). Used as a pointer to data
+	• Stack Pointer register (SP). Pointer for the top of the stack.
+	• Stack Base Pointer register (BP). pointer for base of the stack.
+	• Source Index register (SI). pointer to a source in stream operations.
+	• Destination Index register (DI). pointer to a destination in stream operations
 
+# Assembly syntax:
+<Instruction> <Operand1>,<Operand2>		
+	# Operands can be a Hex val (0x3), a Register (eax), or a memory address (0x0000001)
+	# Instructions:
+		Data Movement/Sorage: MOV <dst>,<src> | LEA
+		Arithmetic:						ADD <dst>,<src> | SUB <dst>,<src> | INC <dst> | DEC <dst> | MUL <dst>,<src> | DIV <dst>,<src>
+		Logic: 								OR | AND | XOR | SHR | SHL
+		Stack: 								PUSH <src> (onto top of stack)| POP <dst> (from top of stack)| CALL | RET
+		Control Flow: 				TEST | CMP (Compare Op1-Op2->FlgReg) | JMP <dst> | JLE <dst> (Jump if FlgReg <=)
 
-
-
-
-
-
-
+## C stuff
+fgets(str, int, stream)		# reads line from specifed stream and stores it
+strcmp(str1, str2)		# compares string 1 to string 2
+atoi(char)		# ascii to interger
+strtok(string)		# splits string on white space
+scanf()		# reads from stdin
 
 
 
