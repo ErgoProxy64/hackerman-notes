@@ -5,7 +5,7 @@ Piv: 10.50.35.227
 
 http://10.50.22.9:8000/
 
-winops: 192.168.65.10, 10.50.25.36    xfreerdp /v:10.50.25.36 /u:student /p:password /dynamic-resolution +clipboard
+winops: 192.168.65.10, 10.50.25.36    xfreerdp /u:student /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard
 linops: 192.168.65.20, 10.50.32.167   ssh -X student@10.50.32.167
 creds: student // password
 
@@ -234,4 +234,42 @@ strtok(string)		# splits string on white space
 scanf()		# reads from stdin
 
 https://www.tutorialspoint.com/cprogramming/index.htm
+
+## actual Analysis
+file <filename>		# tells us what kind of exe the file is
+strings -n 10 <filename> | less		# text in exe, skim through for stuff of interest, "10" is min num of char
+gdb <filename>		# open gdb prompt
+	# GDB commands:
+		disass main
+	# GDB-peda
+		pdisass main
+
+## Ghidra
+file > new project > non-shared project > C:\Users\student > COSC22003 > Finish
+file > import file or import (I) > demo.exe
+search > for string > filter > "enter key"
+
+
+right click > patch instruction		# patch stuffffff
+file > export program > binary > <renamefile> > ok > (on windows) remove .bin extention & run
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
