@@ -310,4 +310,40 @@ msfconsole
 # dir = ls | type = cat |
 
 
+###### Post Exploitation
+## some ssh socket shit
+ssh -M -S /tmp/s <usr>@<IP>		# 
+ssh -o '/tmp/s' a		# 
+
+nano ~/.ssh/config
+
+ssh -o ControlPath='~/.ssh/cm/student@localhost:1111'
+
+ss -ntlp		# kill the pid of 9050 to kill dynamic tunnels
+
+## user enum
+net user
+cat /etc/passwd
+# Zuse is another name for root and is probably vulnarable
+# adding users on windows...
+net user [UserName] [password] /add		# Add New User  (use * for password for a prompt to enter password securely)
+net user [UserName[ /active:no		# Disable User Account
+net localgroup "Power Users" /add moe		# Add user moe to the local group Power Users
+# remote desktop users and administrators are useful groups on windows
+
+## process enum
+tasklist/v
+ps -elf		# security products to look out for: kaspersky & rkhunter & rsyslog(remote logging)
+
+## service enum
+tasklist /svc
+chkconfig
+
+## network enum
+ipconfig /all
+ipconfig -a
+ip a
+
+
+
 
