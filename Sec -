@@ -344,6 +344,46 @@ ipconfig /all
 ipconfig -a
 ip a
 
+###### lunux priv exc
+sudo -l		# shows what you can run as sudo, look for non standard binaries
+sudo cat -> read /etc/shadow
+sudo vi -or- vim -> run bash
+
+find / -perm /4000 2>/dev/null		# shows files with suid bit set
+find / -type f -perm /2000 2>/dev/null		# shows files with sgid bit set
+gtfobins.github.io		# look through above stuff for somethng you can exploite
+
+echo $PATH		# if starts with '.' then will default to local dir
+# make script named after a command that has '#!/bin/bash' and the commands you want to run
+
+## cron stuff
+crontab -l		# shows cron, can use sudo for root's
+cd /etc/cron		# look for sussy crons being ran as root
+crontab.guru		# shows how to make crons (website)
+
+touch -c -t 201603051015 1.txt		# change timestamps
+touch -r 3.txt 1.txt		# copy timestamp
+
+/etc/rsyslog.d/*		# syslog config, may also be in /etc/rsyslog.conf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
