@@ -345,6 +345,8 @@ ipconfig -a
 ip a
 
 ###### lunux priv exc
+/etc/sudoers		# stores users with sudo permissions
+	<userName> ALL=(ALL:ALL) ALL		# entry gives max sudo permissions for given user
 sudo -l		# shows what you can run as sudo, look for non standard binaries
 sudo cat -> read /etc/shadow
 sudo vi -or- vim -> run bash
@@ -354,7 +356,7 @@ find / -type f -perm /2000 2>/dev/null		# shows files with sgid bit set
 gtfobins.github.io		# look through above stuff for somethng you can exploite
 
 echo $PATH		# if starts with '.' then will default to local dir
-# make script named after a command that has '#!/bin/bash' and the commands you want to run
+# make script named after a command that has '#!/bin/bash' and the commands you want to run, chmod +x it
 
 ## cron stuff
 crontab -l		# shows cron, can use sudo for root's
@@ -366,7 +368,10 @@ touch -r 3.txt 1.txt		# copy timestamp
 
 /etc/rsyslog.d/*		# syslog config, may also be in /etc/rsyslog.conf
 
-
+## john
+sudo apt install john		# download john
+# copy entire line from /etc/shadow into another file
+john --wordlist=rockyou.txt <fileWithHashs>		# how to start cracking, rockyou.txt is a wordlist
 
 
 
