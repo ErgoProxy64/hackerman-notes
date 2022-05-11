@@ -1,5 +1,5 @@
 
-Usr: DABR-003-M
+Usr: DABR-003-M		10.50.38.173
 Pwd: IMO2qzSSbZMCdWv	
 Piv: 10.50.35.227
 
@@ -20,6 +20,10 @@ lsb_release -a    # more os ver
 uname -a    # kernel ver
 hostnamectl   # kernel & os ver
 # can be used in https://www.exploit-db.com/ to find exploites
+
+3389 = windows rdp
+may need /cert-ignore in the xfreerdp command
+
 
 ## webpage scraping python script:
 import lxml.html
@@ -366,6 +370,7 @@ ipconfig /all
 ipconfig -a
 ip a
 
+3389 = windows rdp
 
 ###### lunux priv exc
 
