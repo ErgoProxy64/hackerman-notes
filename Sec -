@@ -150,23 +150,6 @@ show databases;		# shows databases that exist on system
 show tables from <database>;		# shows tables from selected database
 
 select <column> from <database>.<table>;		# shows selected column from specified list, use * to grab all columns
-## Services Bin Replace
-401
-Services    # check Services app for services with these flags...
-402
-  Log On As: Local System
-403
-  Start Type: Automatic
-404
-  Decription: Blank (indicates third-party service)
-405
-right click service -> view properties
-406
-  Path to executable    # replace .exe with a shell script if you have permission to do so
-407
-shutdown /r /f /t 00    # restarts windows, may take several tries
-408
-xfreerdp /u:thor /v:10.50.25.36 /dynamic-resolution +glyph-cache +clipboard   # log in as new user, use user in script, make sure ip is right too
 # use 'UNION' between commands to join them together, output must be similar
 #	tb1 has two less colums than tb2 in this example:
 select *,null,null from db1.tb1 UNION select * from db1.tb2;		# adds 2 temp colums to tb1
